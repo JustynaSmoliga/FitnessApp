@@ -1,24 +1,35 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import PrivateRoute from "./features/PrivateRoute/PrivateRoute";
+import PrivateRoute from "./features/private-route/PrivateRoute";
 import { Counter } from "./features/counter/Counter";
-import Menu from './features/Menu/Menu';
+import Menu from "./features/menu/Menu";
 import "./App.css";
+
+//dodac route * dla not found, dodac lazy loading
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/registration">
-          <p>registration</p>
+          <p>Registration</p>
         </Route>
         <Route path="/login">
-          <p>login</p>
+          <p>Login</p>
         </Route>
         <PrivateRoute path="/overview">
-          <p>overview</p>
+          <p>Overview</p>
         </PrivateRoute>
-        <Route path="/">
+        <PrivateRoute path="/diary">
+          <p>My diary</p>
+        </PrivateRoute>
+        <PrivateRoute path="/goals">
+          <p>My goals</p>
+        </PrivateRoute>
+        <PrivateRoute path="/weights">
+          <p>My weights</p>
+        </PrivateRoute>
+        <Route path="/" exact>
           <Counter />
         </Route>
       </Switch>

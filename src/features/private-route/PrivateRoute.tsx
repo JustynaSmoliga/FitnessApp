@@ -1,7 +1,8 @@
+import { Box } from "@material-ui/core";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
 import { useHistory } from "react-router-dom";
-import Menu from '../Menu/Menu';
+import Menu from "../menu/Menu";
 
 export interface PrivateRouteProps extends RouteProps {}
 
@@ -17,10 +18,10 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
   // history.push("/registration");
 
   return (
-    <div>
-      <Menu/>
+    <Box display="flex" height="100vh" >
+      <Menu />
       <Route {...props} />
-    </div>
+    </Box>
   );
 };
 
