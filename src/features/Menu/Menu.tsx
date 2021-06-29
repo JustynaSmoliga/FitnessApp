@@ -25,6 +25,7 @@ const useStyles = makeStyles({
   activeLink: {
     "&.MuiListItem-button&.active": {
         color: mainTheme.palette.text.primary,
+        background: '#e7e7e7'
     },
   },
 });
