@@ -11,14 +11,22 @@ import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import NetworkCheckOutlinedIcon from "@material-ui/icons/NetworkCheckOutlined";
-import { NavLink } from "react-router-dom";
+import {NavLink } from "react-router-dom";
+import { mainTheme } from "../../theme/customMaterialUiTheme";
+
 
 const useStyles = makeStyles({
   root: {
     width: 280,
+    color: "rgba(74, 72, 78, 0.7)",
+   
   },
-  logo: { color: "red" },
-  active: { color: "black" },
+  logo: { color:mainTheme.palette.secondary.main },
+  activeLink: {
+    "&.MuiListItem-button&.active": {
+        color: mainTheme.palette.text.primary,
+    },
+  },
 });
 
 interface NewMenuItemProps {
@@ -28,8 +36,14 @@ interface NewMenuItemProps {
 }
 
 const NewMenuItem: React.FC<NewMenuItemProps> = (props) => {
+  const classes = useStyles();
+
   return (
-    <MenuItem component={NavLink} to={props.linkPath}>
+    <MenuItem
+      className={classes.activeLink}
+      component={NavLink}
+      to={props.linkPath}
+    >
       <ListItemIcon>{props.icon}</ListItemIcon>
       <Typography variant="inherit">{props.text}</Typography>
     </MenuItem>

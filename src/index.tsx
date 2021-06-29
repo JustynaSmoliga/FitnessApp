@@ -6,12 +6,16 @@ import { store } from "./app/store";
 import { Provider } from "react-redux";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
+import { ThemeProvider } from "@material-ui/core/styles";
+import {mainTheme} from './theme/customMaterialUiTheme';
 
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
       <Router>
-        <App />
+        <ThemeProvider theme={mainTheme}>
+          <App />
+        </ThemeProvider>
       </Router>
     </Provider>
   </React.StrictMode>,
