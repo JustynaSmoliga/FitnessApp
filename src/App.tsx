@@ -2,10 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
 import { Counter } from "./features/counter/Counter";
-import Menu from "./features/menu/Menu";
 import "./App.css";
-
-//dodac route * dla not found, dodac lazy loading
 
 function App() {
   return (
@@ -31,6 +28,9 @@ function App() {
         </PrivateRoute>
         <Route path="/" exact>
           <Counter />
+        </Route>
+        <Route path="/*">
+          <p>Page not found</p>
         </Route>
       </Switch>
     </div>

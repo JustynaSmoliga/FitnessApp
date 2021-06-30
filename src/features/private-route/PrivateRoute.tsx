@@ -6,16 +6,13 @@ import Menu from "../menu/Menu";
 
 export interface PrivateRouteProps extends RouteProps {}
 
-//to przekierowujemy uzytkownika na logowanie
 
 const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
-  //w divie zwracanym w private route przed routem renderujemy jeszcze menu
-  //w tym komponencie dodatkowo sprawdzam czy uzytkownik jest zalogowany, jesli jest to zwracamy route, a jesli nie
 
   const history = useHistory();
 
-  //jezeli user jest niezalogowany to
-  // history.push("/registration");
+  //TODO Checking if user is logged in. If user isn't logged in, redirect to log in route  
+  // history.push("/login");
 
   return (
     <Box display="flex" height="100vh" >
