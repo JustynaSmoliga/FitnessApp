@@ -13,6 +13,7 @@ import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import NetworkCheckOutlinedIcon from "@material-ui/icons/NetworkCheckOutlined";
 import {NavLink } from "react-router-dom";
 import { mainTheme } from "../../theme/customMaterialUiTheme";
+import { Divider } from "@material-ui/core";
 
 
 const useStyles = makeStyles({
@@ -58,6 +59,7 @@ export default function Menu() {
     <Paper className={classes.root}>
       <MenuList>
         <p className={classes.logo}>FitnessApp</p>
+        <Divider/>
         <NewMenuItem
           text="Overview"
           icon={<RemoveRedEyeOutlinedIcon fontSize="small" />}
@@ -83,6 +85,8 @@ export default function Menu() {
           icon={<ExitToAppOutlinedIcon fontSize="small" />}
           linkPath="/login"
         />
+        <Divider/>
+        <p>Personal data button</p>
       </MenuList>
     </Paper>
   );

@@ -1,3 +1,4 @@
+import { Container } from "@material-ui/core";
 import { Box } from "@material-ui/core";
 import React from "react";
 import { Route, RouteProps } from "react-router-dom";
@@ -15,9 +16,12 @@ const PrivateRoute: React.FC<PrivateRouteProps> = (props) => {
   // history.push("/login");
 
   return (
+
     <Box display="flex" height="100vh" >
       <Menu />
+      <Container>
       <Route {...props} />
+      </Container>
     </Box>
   );
 };
