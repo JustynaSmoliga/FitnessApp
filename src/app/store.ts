@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import counterReducer from '../features/counter/counterSlice';
+import datePickerReducer from '../features/date-picker/datePickerSlice';
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
+    datePicker:datePickerReducer,
   },
 });
 

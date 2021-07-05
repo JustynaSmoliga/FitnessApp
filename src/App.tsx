@@ -4,7 +4,7 @@ import PrivateRoute from "./features/private-route/PrivateRoute";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import WrapperCard from "./features/wrapperCard/WrapperCard";
-import DiaryNavBar from "./features/diary-navbar/DiaryNavBar";
+import Diary from "./features/diary/Diary";
 
 function App() {
   return (
@@ -20,7 +20,7 @@ function App() {
           <WrapperCard>Overview</WrapperCard>
         </PrivateRoute>
         <PrivateRoute path="/diary">
-         <DiaryNavBar/>
+          <Diary />
         </PrivateRoute>
         <PrivateRoute path="/goals">
           <p>My goals</p>
