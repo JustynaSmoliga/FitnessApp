@@ -1,8 +1,9 @@
+import TextField from "@material-ui/core/TextField";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { Button, Input, InputLabel, Paper } from "@material-ui/core";
 import React, { useState } from "react";
 import styles from "./SearchEngine.module.css";
-import TextField from "@material-ui/core/TextField";
-import Autocomplete from "@material-ui/lab/Autocomplete";
+import axios from "axios";
 
 interface SearchEngineProps {
   title: string;
@@ -14,36 +15,67 @@ interface Product {
   quantityInGrams: number;
 }
 
-const dummyProducts: Product[] = [
-  { name: "egg", kcal: 90, quantityInGrams: 100 },
-  { name: "cucumber", kcal: 50, quantityInGrams: 100 },
-  { name: "plum", kcal: 100, quantityInGrams: 100 },
-];
-
 const SearchEngine: React.FC<SearchEngineProps> = (props) => {
-  let [productsList, setProductsList] = useState([]);
-  const [productNameInput, setProductNameINput]=useState('');
-  const [productQuantityInput, setProductQuantityInput]=useState('');
+  let [productsList, setProductsList] = useState<Product[]>([]);
+  const [productNameInput, setProductNameInput] = useState<string | null>("");
+  const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
+  const [productCalories, setProductCalories] = useState(0);
+  const [productQuantity, setProductQuantity] = useState(0);
 
-  //useState ustawic initial value quantity na 1
-  //kiedy ktos wpisze 3 pierwsze litery produktu strzal na backend po liste produktow
-  // https://stackoverflow.com/questions/66249791/load-material-ui-autocomplete-suggestions-after-user-input
-
-  const changeTextFieldHandler = (
+  const changeTextFieldHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
-    const enteredProduct = event.target.value.length;
-    if (enteredProduct < 3 && enteredProduct !== 0) {
+    const enteredProductLength = event.target.value.length;
+    if (enteredProductLength < 3) {
       return;
     } else {
-      //request API, po pobraniu produktow umieszczamy je w useState
+      const enteredProduct = event.target.value;
+      const products = await axios.get("http://localhost:8080/products", {
+        params: { productName: enteredProduct },
+      });
+
+      setProductsList(products.data);
+      console.log(products.data);
     }
   };
 
-  const submitHandler = (event:React.FormEvent) => {
+  const selectOptionHandler = (event: any, newValue: string | null) => {
+    setProductNameInput(newValue);
+    const productIndex = productsList.findIndex(
+      (product) => product.name === newValue
+    );
+
+    const selectedProductQuantityInGrams =
+      productsList[productIndex].quantityInGrams;
+    const selectedProductCalories = productsList[productIndex].kcal;
+    console.log(selectedProductCalories);
+
+    setProductQuantity(1);
+    setproductQuantityInGrams(selectedProductQuantityInGrams);
+    setProductCalories(selectedProductCalories);
+  };
+
+  const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("form submit");
-    
+  };
+
+  const changeQuantityOfProductHandler = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    let quantityOfProduct = event.target.value;
+    const quantityOfProductAsNumber = +quantityOfProduct;
+    setProductQuantity(quantityOfProductAsNumber);
+  };
+
+  const calculateSumOfCalories = (
+    calories: number,
+    quantityInGrams: number,
+    quantity: number
+  ) => {
+    const productQuantity = quantityInGrams * quantity;
+    const sumOfCalories = (calories * productQuantity) / quantityInGrams;
+    return sumOfCalories;
   };
 
   return (
@@ -53,9 +85,11 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
 
         <form onSubmit={submitHandler}>
           <Autocomplete
+            value={productNameInput}
+            onChange={selectOptionHandler}
             id="search-component"
             freeSolo
-            options={dummyProducts.map((product) => product.name)}
+            options={productsList.map((product) => product.name)}
             renderInput={(params) => (
               <TextField
                 {...params}
@@ -69,12 +103,26 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
           />
           <TextField
             type="number"
-            label="Quantity in grams"
+            label="Product in grams"
             variant="outlined"
             InputProps={{ inputProps: { min: 1 } }}
+            value={productQuantityInGrams}
           />
-          {/* ta labelka ma sie pokazac dopiero po wybraniu produktu i ilosci */}
-          <InputLabel>60 kcal</InputLabel>
+          <TextField
+            type="number"
+            label="Quantity"
+            variant="outlined"
+            InputProps={{ inputProps: { min: 0.0001 } }}
+            onChange={changeQuantityOfProductHandler}
+            value={productQuantity}
+          />
+          <InputLabel>
+            {calculateSumOfCalories(
+              productCalories,
+              productQuantityInGrams,
+              productQuantity
+            )}
+          </InputLabel>
           <Button
             variant="contained"
             color="secondary"
