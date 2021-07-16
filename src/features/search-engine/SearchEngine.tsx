@@ -11,6 +11,7 @@ import {
 import React, { useState } from "react";
 import styles from "./SearchEngine.module.css";
 import axios from "axios";
+import ProductsListTable from "../products-list-table/ProductsListTable";
 
 interface SearchEngineProps {
   title: string;
@@ -35,6 +36,9 @@ const useStyles = makeStyles((theme: Theme) =>
         width: "100%",
       },
     },
+    form: {
+      width: "300px",
+    },
   })
 );
 
@@ -46,6 +50,7 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
   const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
   const [productCalories, setProductCalories] = useState(0);
   const [productQuantity, setProductQuantity] = useState(0);
+  const [searchEngineShowed, setSearchEngineShowed] = useState(false);
 
   const changeTextFieldHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -89,6 +94,7 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("form submit");
+    setSearchEngineShowed(false);
   };
 
   const changeQuantityOfProductHandler = (
@@ -97,6 +103,14 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
     let quantityOfProduct = event.target.value;
     const quantityOfProductAsNumber = +quantityOfProduct;
     setProductQuantity(quantityOfProductAsNumber);
+  };
+
+  const addProductButtonClickHandler = () => {
+    setSearchEngineShowed(true);
+  };
+
+  const cancelButtonClickHandler = () => {
+    setSearchEngineShowed(false);
   };
 
   const calculateSumOfCalories = (
@@ -116,76 +130,88 @@ const SearchEngine: React.FC<SearchEngineProps> = (props) => {
     <div className={styles.searchEngineContainer}>
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
+        <ProductsListTable />
 
-        <form onSubmit={submitHandler} className={classes.root}>
-          <Box padding="6px">
-            <Autocomplete
-              value={productNameInput}
-              onChange={selectOptionHandler}
-              freeSolo
-              id="search-component"
-              selectOnFocus
-              blurOnSelect
-              handleHomeEndKeys
-              options={productsList.map((product) => product.name)}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  label="Search product"
-                  margin="normal"
-                  variant="outlined"
-                  onChange={changeTextFieldHandler}
+        {searchEngineShowed && (
+          <Box className={classes.form}>
+            <form onSubmit={submitHandler} className={classes.root}>
+              <Box padding="6px">
+                <Autocomplete
                   value={productNameInput}
+                  onChange={selectOptionHandler}
+                  freeSolo
+                  id="search-component"
+                  selectOnFocus
+                  blurOnSelect
+                  handleHomeEndKeys
+                  options={productsList.map((product) => product.name)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search product"
+                      margin="normal"
+                      variant="outlined"
+                      onChange={changeTextFieldHandler}
+                      value={productNameInput}
+                    />
+                  )}
                 />
-              )}
-            />
-          </Box>
-          <TextField
-            label="Calories per product portion: "
-            variant="outlined"
-            value={`${productCalories} kcal / ${productQuantityInGrams} g`}
-            InputProps={{
-              readOnly: true,
-            }}
-          />
+              </Box>
+              <TextField
+                label="Calories per product portion: "
+                variant="outlined"
+                value={`${productCalories} kcal / ${productQuantityInGrams} g`}
+                InputProps={{
+                  readOnly: true,
+                }}
+              />
 
-          <TextField
-            type="number"
-            label="Quantity:"
-            variant="outlined"
-            onChange={changeQuantityOfProductHandler}
-            value={productQuantity}
-          />
-          <TextField
-            value={calculateSumOfCalories(
-              productCalories,
-              productQuantityInGrams,
-              productQuantity
-            )}
-            InputProps={{
-              readOnly: true,
-            }}
-            variant="outlined"
-            label="Total calories: "
-          />
-          <Box paddingBottom='10%' display='flex' justifyContent='center' >
-            <Button
-              variant="outlined"
-              color="secondary"
-              type="button"
-            >
-              Cancel
-            </Button>
-            <Box width='5%'></Box>
-            <Button
-              variant="contained"
-              color="secondary"
-              type="submit"
-            >
-              Save
-            </Button>
+              <TextField
+                type="number"
+                label="Quantity:"
+                variant="outlined"
+                onChange={changeQuantityOfProductHandler}
+                value={productQuantity}
+              />
+              <TextField
+                value={calculateSumOfCalories(
+                  productCalories,
+                  productQuantityInGrams,
+                  productQuantity
+                )}
+                InputProps={{
+                  readOnly: true,
+                }}
+                variant="outlined"
+                label="Total calories: "
+              />
+              <Box paddingBottom="10%" display="flex" justifyContent="center">
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  type="button"
+                  onClick={cancelButtonClickHandler}
+                >
+                  Cancel
+                </Button>
+                <Box width="5%"></Box>
+                <Button variant="contained" color="secondary" type="submit">
+                  Save
+                </Button>
+              </Box>
+            </form>
           </Box>
-        </form>
+        )}
+        {!searchEngineShowed && (
+          <Button
+            variant="contained"
+            color="secondary"
+            type="button"
+            onClick={addProductButtonClickHandler}
+          >
+            Add
+          </Button>
+        )}
       </Paper>
     </div>
   );
