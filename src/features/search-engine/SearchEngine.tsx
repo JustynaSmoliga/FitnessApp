@@ -13,7 +13,7 @@ import styles from "./SearchEngine.module.css";
 import axios from "axios";
 import ProductsListTable from "../products-list-table/ProductsListTable";
 
-interface SearchEngineProps {
+interface MealProps {
   title: string;
 }
 
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SearchEngine: React.FC<SearchEngineProps> = (props) => {
+const SearchEngine: React.FC<MealProps> = (props) => {
   const classes = useStyles();
 
   let [productsList, setProductsList] = useState<Product[]>([]);
