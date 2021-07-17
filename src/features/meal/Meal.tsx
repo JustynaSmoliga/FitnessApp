@@ -9,18 +9,21 @@ import {
   Theme,
 } from "@material-ui/core";
 import React, { useState } from "react";
-import styles from "./SearchEngine.module.css";
+import styles from "./Meal.module.css";
 import axios from "axios";
 import ProductsListTable from "../products-list-table/ProductsListTable";
 
 interface MealProps {
   title: string;
+  productsEaten: Product[];
+  date:Date
 }
 
 interface Product {
   name: string;
-  kcal: number;
-  quantityInGrams: number;
+  totalCalories: number;
+  caloriesInGrams: number;
+  quantity: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -42,7 +45,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const SearchEngine: React.FC<MealProps> = (props) => {
+const Meal: React.FC<MealProps> = (props) => {
   const classes = useStyles();
 
   let [productsList, setProductsList] = useState<Product[]>([]);
@@ -82,8 +85,8 @@ const SearchEngine: React.FC<MealProps> = (props) => {
     );
 
     const selectedProductQuantityInGrams =
-      productsList[productIndex].quantityInGrams;
-    const selectedProductCalories = productsList[productIndex].kcal;
+      productsList[productIndex].caloriesInGrams;
+    const selectedProductCalories = productsList[productIndex].totalCalories;
     console.log(selectedProductCalories);
 
     setProductQuantity(1);
@@ -130,7 +133,7 @@ const SearchEngine: React.FC<MealProps> = (props) => {
     <div className={styles.searchEngineContainer}>
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
-        <ProductsListTable />
+        <ProductsListTable productsEaten={props.productsEaten} date={props.date}/>
 
         {searchEngineShowed && (
           <Box className={classes.form}>
@@ -217,4 +220,4 @@ const SearchEngine: React.FC<MealProps> = (props) => {
   );
 };
 
-export default SearchEngine;
+export default Meal;
