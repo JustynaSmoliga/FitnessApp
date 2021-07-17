@@ -1,4 +1,4 @@
-import { Product } from "../../client/mealsClient";
+import { Product } from "../../slice/mealsSlice";
 import styles from "./ProductListTable.module.css";
 
 

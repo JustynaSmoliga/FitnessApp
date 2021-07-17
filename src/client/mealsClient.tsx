@@ -1,37 +1,5 @@
 import { AxiosResponse } from "axios";
-import { Moment } from "moment";
-
-// interface Product {
-//   name: string;
-//   totalCalories: number;
-//   caloriesInGrams: number;
-//   quantity: number;
-// }
-
-// export interface Meals {
-//   date: Date;
-//   breakfast: Product[];
-//   lunch: Product[];
-//   dinner: Product[];
-//   supper: Product[];
-//   snacks: Product[];
-// }
-
-export interface Product {
-    name: string;
-    totalCalories: number;
-    caloriesInGrams: number;
-    quantity: number;
-  }
-  
-  export interface Meals {
-    date: Moment;
-    breakfast: Product[];
-    lunch: Product[];
-    dinner: Product[];
-    supper: Product[];
-    snacks: Product[];
-  }
+import { Meals } from "../slice/mealsSlice";
 
 const meals = {
   date: new Date(Date.now()),

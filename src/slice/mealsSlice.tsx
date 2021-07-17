@@ -1,10 +1,24 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import moment from "moment";
-import { getMeals, Meals } from "../client/mealsClient";
-
-
+import moment, { Moment } from "moment";
+import { getMeals} from "../client/mealsClient";
 
 export interface MealsState extends Meals {}
+
+export interface Product {
+  name: string;
+  totalCalories: number;
+  caloriesInGrams: number;
+  quantity: number;
+}
+
+export interface Meals {
+  date: Moment;
+  breakfast: Product[];
+  lunch: Product[];
+  dinner: Product[];
+  supper: Product[];
+  snacks: Product[];
+}
 
 const initialState: MealsState = {
   date: moment(),
