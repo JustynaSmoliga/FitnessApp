@@ -31,9 +31,10 @@ const initialState: MealsState = {
 
 export const fetchMeals = createAsyncThunk(
   "meals/fetchMeals",
-  async (date: Date) => {
+  async (date: Moment) => {
     const response = await getMeals(date);
     return response.data;
+    
   }
 );
 
@@ -54,7 +55,12 @@ export const mealsSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchMeals.fulfilled, (state, action) => {
       const meals = action.payload;
-      state = meals;
+      state.date=meals.date;
+      state.breakfast=meals.breakfast;
+      state.dinner=meals.dinner;
+      state.lunch=meals.lunch;
+      state.snacks=meals.snacks;
+      state.supper=meals.supper;
     });
   },
 });
