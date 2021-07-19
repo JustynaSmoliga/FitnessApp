@@ -1,3 +1,4 @@
+import { Paper } from "@material-ui/core";
 import { Product } from "../../slice/mealsSlice";
 import styles from "./ProductListTable.module.css";
 
@@ -14,7 +15,7 @@ interface RowProps {
 
 const Row: React.FC<RowProps> = (props) => {
   return (
-    <tr>
+    <tr className={styles.row}>
       <td>{props.name}</td>
       <td>{props.totalCalories}</td>
       <td>{props.quantity}</td>
@@ -24,12 +25,12 @@ const Row: React.FC<RowProps> = (props) => {
 
 const ProductListTable: React.FC<ProductListTableProps> = (props) => {
   return (
-    <table className={styles.table}>
+    <table id="products" className={styles.table}>
       <thead>
         <tr>
-          <td>Product name</td>
-          <td>Total calories </td>
-          <td>Quantity</td>
+          <th>Product name</th>
+          <th>Total calories [kcal]</th>
+          <th>Quantity</th>
         </tr>
         {props.productsEaten.map((product) => (
           <Row

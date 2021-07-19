@@ -21,7 +21,7 @@ const Diary = () => {
     <Box display="flex" flexDirection="column" alignItems="center">
       <DatePicker />
       <DiaryNavBar />
-      <Box display="flex" flexWrap="wrap">
+      <Box display="flex" flexDirection="row">
         <Meal
           title="BREAKFAST"
           productsEaten={meals.breakfast}

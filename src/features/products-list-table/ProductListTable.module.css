@@ -1,7 +1,36 @@
-.table{
-    border: 1px solid #1976d2;
+.table {
+  border-collapse: collapse;
+  /* border: 1px solid #ddd; */
+  font-family: "Montserrat";
+  width: 460px;
+  height: 150px;
 }
 
-.row{
-    border-top: 1px solid black;
+.table td {
+  /* border-right: 1px solid #ddd; */
+  padding: 8px 20px;
+}
+
+.table td:nth-child(even) {
+  border-right: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+}
+
+.table th {
+  border-right: 1px solid #ddd;
+  padding: 8px 20px;
+  color: #1976d2;
+  font-weight: 500;
+}
+
+.table th:last-child {
+  border-right: none;
+}
+
+/* .row {
+  border-collapse: initial;
+} */
+
+.row:nth-child(even) {
+  background-color: #f2f2f2;
 }

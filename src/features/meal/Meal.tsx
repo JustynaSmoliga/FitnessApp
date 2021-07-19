@@ -16,7 +16,7 @@ import ProductsListTable from "../products-list-table/ProductsListTable";
 interface MealProps {
   title: string;
   productsEaten: Product[];
-  date:Date
+  date: Date;
 }
 
 interface Product {
@@ -24,6 +24,12 @@ interface Product {
   totalCalories: number;
   caloriesInGrams: number;
   quantity: number;
+}
+
+interface ProductDto {
+  name: string;
+  kcal: number;
+  quantityInGrams: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -36,11 +42,11 @@ const useStyles = makeStyles((theme: Theme) =>
         // marginLeft: "2%",
       },
       "& .MuiAutocomplete-inputRoot": {
-        width: "100%",
+        // width: "100%",
       },
     },
     form: {
-      width: "300px",
+      // width: "200px",
     },
   })
 );
@@ -63,12 +69,26 @@ const Meal: React.FC<MealProps> = (props) => {
       return;
     } else {
       const enteredProduct = event.target.value;
-      const products = await axios.get("http://localhost:8080/products", {
-        params: { productName: enteredProduct },
+      const response = await axios.get(
+        "http://localhost:8080/products",
+        {
+          params: { productName: enteredProduct },
+        }
+      );
+
+      const productDtos: ProductDto[] = response.data;
+
+      const products: Product[] = productDtos.map((productDto) => {
+        const product: Product = {
+          caloriesInGrams: productDto.quantityInGrams,
+          name: productDto.name,
+          totalCalories: productDto.kcal,
+          quantity: 1
+        };
+        return product;
       });
 
-      setProductsList(products.data);
-      console.log(products.data);
+      setProductsList(products);
     }
   };
 
@@ -86,8 +106,9 @@ const Meal: React.FC<MealProps> = (props) => {
 
     const selectedProductQuantityInGrams =
       productsList[productIndex].caloriesInGrams;
+    console.log(selectedProductQuantityInGrams);
     const selectedProductCalories = productsList[productIndex].totalCalories;
-    console.log(selectedProductCalories);
+    // console.log(selectedProductCalories);
 
     setProductQuantity(1);
     setproductQuantityInGrams(selectedProductQuantityInGrams);
@@ -133,78 +154,83 @@ const Meal: React.FC<MealProps> = (props) => {
     <div className={styles.searchEngineContainer}>
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
-        <ProductsListTable productsEaten={props.productsEaten} date={props.date}/>
+        <Box display="flex">
+          <ProductsListTable
+            productsEaten={props.productsEaten}
+            date={props.date}
+          />
 
-        {searchEngineShowed && (
-          <Box className={classes.form}>
-            <form onSubmit={submitHandler} className={classes.root}>
-              <Box padding="6px">
-                <Autocomplete
-                  value={productNameInput}
-                  onChange={selectOptionHandler}
-                  freeSolo
-                  id="search-component"
-                  selectOnFocus
-                  blurOnSelect
-                  handleHomeEndKeys
-                  options={productsList.map((product) => product.name)}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      label="Search product"
-                      margin="normal"
-                      variant="outlined"
-                      onChange={changeTextFieldHandler}
-                      value={productNameInput}
-                    />
-                  )}
-                />
-              </Box>
-              <TextField
-                label="Calories per product portion: "
-                variant="outlined"
-                value={`${productCalories} kcal / ${productQuantityInGrams} g`}
-                InputProps={{
-                  readOnly: true,
-                }}
-              />
-
-              <TextField
-                type="number"
-                label="Quantity:"
-                variant="outlined"
-                onChange={changeQuantityOfProductHandler}
-                value={productQuantity}
-              />
-              <TextField
-                value={calculateSumOfCalories(
-                  productCalories,
-                  productQuantityInGrams,
-                  productQuantity
-                )}
-                InputProps={{
-                  readOnly: true,
-                }}
-                variant="outlined"
-                label="Total calories: "
-              />
-              <Box paddingBottom="10%" display="flex" justifyContent="center">
-                <Button
+          {searchEngineShowed && (
+            <Box className={classes.form}>
+              <form onSubmit={submitHandler} className={classes.root}>
+                <Box padding="6px">
+                  <Autocomplete
+                    value={productNameInput}
+                    onChange={selectOptionHandler}
+                    freeSolo
+                    id="search-component"
+                    selectOnFocus
+                    blurOnSelect
+                    handleHomeEndKeys
+                    options={productsList.map((product) => product.name)}
+                    renderInput={(params) => (
+                      <TextField
+                        {...params}
+                        label="Search product"
+                        margin="normal"
+                        variant="outlined"
+                        onChange={changeTextFieldHandler}
+                        value={productNameInput}
+                      />
+                    )}
+                  />
+                </Box>
+                <TextField
+                  label="Calories per product portion: "
                   variant="outlined"
-                  color="secondary"
-                  type="button"
-                  onClick={cancelButtonClickHandler}
-                >
-                  Cancel
-                </Button>
-                <Box width="5%"></Box>
-                <Button variant="contained" color="secondary" type="submit">
-                  Save
-                </Button>
-              </Box>
-            </form>
-          </Box>
-        )}
+                  value={`${productCalories} kcal / ${productQuantityInGrams} g`}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                />
+
+                <TextField
+                  type="number"
+                  label="Quantity:"
+                  variant="outlined"
+                  onChange={changeQuantityOfProductHandler}
+                  value={productQuantity}
+                />
+                <TextField
+                  value={calculateSumOfCalories(
+                    productCalories,
+                    productQuantityInGrams,
+                    productQuantity
+                  )}
+                  InputProps={{
+                    readOnly: true,
+                  }}
+                  variant="outlined"
+                  label="Total calories: "
+                />
+                <Box paddingBottom="10%" display="flex" justifyContent="center">
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    type="button"
+                    onClick={cancelButtonClickHandler}
+                  >
+                    Cancel
+                  </Button>
+                  <Box width="5%"></Box>
+                  <Button variant="contained" color="secondary" type="submit">
+                    Save
+                  </Button>
+                </Box>
+              </form>
+            </Box>
+          )}
+        </Box>
         {!searchEngineShowed && (
           <Button
             variant="contained"
