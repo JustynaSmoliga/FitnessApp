@@ -9,6 +9,11 @@ const meals = {
     { name: "cucumber", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
     { name: "banana", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
     { name: "carrot", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
+    { name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
+    { name: "cucumber", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
+    { name: "banana", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
+    { name: "carrot", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
+  
   ],
   lunch: [],
   dinner: [

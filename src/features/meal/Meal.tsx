@@ -33,15 +33,13 @@ const useStyles = makeStyles((theme: Theme) =>
       "& .MuiTextField-root": {
         // margin: theme.spacing(1),
         marginBottom: "5%",
-        // marginRight: "2%",
-        // marginLeft: "2%",
-      },
-      "& .MuiAutocomplete-inputRoot": {
-        // width: "100%",
       },
     },
     form: {
-      // width: "200px",
+      width: "170px",
+      marginLeft: "1%",
+      marginRight: "3%",
+      paddingTop:'2%'
     },
   })
 );
@@ -128,10 +126,10 @@ const Meal: React.FC<MealProps> = (props) => {
   };
 
   return (
-    <div className={styles.searchEngineContainer}>
+    <div>
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
-        <Box display="flex">
+        <Box display="flex" minWidth="490px" justifyContent="center">
           <ProductsListTable
             productsEaten={props.productsEaten}
             date={props.date}
@@ -140,28 +138,27 @@ const Meal: React.FC<MealProps> = (props) => {
           {searchEngineShowed && (
             <Box className={classes.form}>
               <form onSubmit={submitHandler} className={classes.root}>
-                <Box padding="6px">
-                  <Autocomplete
-                    value={productNameInput}
-                    onChange={selectOptionHandler}
-                    freeSolo
-                    id="search-component"
-                    selectOnFocus
-                    blurOnSelect
-                    handleHomeEndKeys
-                    options={productsList.map((product) => product.name)}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Search product"
-                        margin="normal"
-                        variant="outlined"
-                        onChange={changeTextFieldHandler}
-                        value={productNameInput}
-                      />
-                    )}
-                  />
-                </Box>
+                <Autocomplete
+                  value={productNameInput}
+                  onChange={selectOptionHandler}
+                  freeSolo
+                  id="search-component"
+                  selectOnFocus
+                  blurOnSelect
+                  handleHomeEndKeys
+                  options={productsList.map((product) => product.name)}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Search product"
+                      margin="normal"
+                      variant="outlined"
+                      onChange={changeTextFieldHandler}
+                      value={productNameInput}
+                    />
+                  )}
+                />
+
                 <TextField
                   label="Calories per product portion: "
                   variant="outlined"
@@ -170,27 +167,34 @@ const Meal: React.FC<MealProps> = (props) => {
                     readOnly: true,
                   }}
                 />
-
-                <TextField
-                  type="number"
-                  label="Quantity:"
-                  variant="outlined"
-                  onChange={changeQuantityOfProductHandler}
-                  value={productQuantity}
-                />
-                <TextField
-                  value={calculateSumOfCalories(
-                    productCalories,
-                    productQuantityInGrams,
-                    productQuantity
-                  )}
-                  InputProps={{
-                    readOnly: true,
-                  }}
-                  variant="outlined"
-                  label="Total calories: "
-                />
-                <Box paddingBottom="10%" display="flex" justifyContent="center">
+                <Box display="flex">
+                  <TextField
+                    type="number"
+                    label="Quantity:"
+                    variant="outlined"
+                    onChange={changeQuantityOfProductHandler}
+                    value={productQuantity}
+                  />
+                  <Box width="30px"></Box>
+                  <TextField
+                    value={calculateSumOfCalories(
+                      productCalories,
+                      productQuantityInGrams,
+                      productQuantity
+                    )}
+                    InputProps={{
+                      readOnly: true,
+                    }}
+                    variant="outlined"
+                    label="Total calories: "
+                  />
+                </Box>
+                <Box
+                  paddingTop="5%"
+                  paddingBottom="15%"
+                  display="flex"
+                  justifyContent="center"
+                >
                   <Button
                     variant="outlined"
                     color="secondary"
@@ -209,14 +213,17 @@ const Meal: React.FC<MealProps> = (props) => {
           )}
         </Box>
         {!searchEngineShowed && (
-          <Button
-            variant="contained"
-            color="secondary"
-            type="button"
-            onClick={addProductButtonClickHandler}
-          >
-            Add
-          </Button>
+          <Box paddingBottom='4%'>
+            <Button
+              variant="contained"
+              color="secondary"
+              type="button"
+              onClick={addProductButtonClickHandler}
+            
+            >
+              Add product
+            </Button>
+          </Box>
         )}
       </Paper>
     </div>
