@@ -10,6 +10,7 @@ import {
 } from "@material-ui/core";
 import React, { useState } from "react";
 import styles from "./Meal.module.css";
+import { getProducts } from "../../client/productClient";
 import axios from "axios";
 import ProductsListTable from "../products-list-table/ProductsListTable";
 
@@ -24,12 +25,6 @@ interface Product {
   totalCalories: number;
   caloriesInGrams: number;
   quantity: number;
-}
-
-interface ProductDto {
-  name: string;
-  kcal: number;
-  quantityInGrams: number;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -69,25 +64,7 @@ const Meal: React.FC<MealProps> = (props) => {
       return;
     } else {
       const enteredProduct = event.target.value;
-      const response = await axios.get(
-        "http://localhost:8080/products",
-        {
-          params: { productName: enteredProduct },
-        }
-      );
-
-      const productDtos: ProductDto[] = response.data;
-
-      const products: Product[] = productDtos.map((productDto) => {
-        const product: Product = {
-          caloriesInGrams: productDto.quantityInGrams,
-          name: productDto.name,
-          totalCalories: productDto.kcal,
-          quantity: 1
-        };
-        return product;
-      });
-
+      const products = await getProducts(enteredProduct);
       setProductsList(products);
     }
   };
