@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme: Theme) =>
       width: "170px",
       marginLeft: "1%",
       marginRight: "3%",
-      paddingTop:'2%'
+      paddingTop: "2%",
     },
   })
 );
@@ -93,6 +93,15 @@ const Meal: React.FC<MealProps> = (props) => {
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("form submit");
+    let newProduct = {
+      name: productNameInput,
+      totalCalories: productCalories,
+      caloriesInGrams: productQuantityInGrams,
+      quantity: productQuantity,
+    };
+
+    //wywolac akcje z reduxa, w ktorej wysylamy na backend newProduct a nastepnie znow pobieramy cala liste produktow. 
+
     setSearchEngineShowed(false);
   };
 
@@ -213,13 +222,12 @@ const Meal: React.FC<MealProps> = (props) => {
           )}
         </Box>
         {!searchEngineShowed && (
-          <Box paddingBottom='4%'>
+          <Box paddingBottom="4%">
             <Button
               variant="contained"
               color="secondary"
               type="button"
               onClick={addProductButtonClickHandler}
-            
             >
               Add product
             </Button>

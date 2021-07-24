@@ -38,6 +38,8 @@ export const fetchMeals = createAsyncThunk(
   }
 );
 
+// const addMeal=createAsyncThunk("meals/addMeal",);
+
 export const mealsSlice = createSlice({
   name: "meals",
   initialState,
