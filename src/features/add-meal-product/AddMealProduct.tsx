@@ -39,7 +39,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const [productNameInput, setProductNameInput] = useState<string | null>("");
   const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
   const [productCalories, setProductCalories] = useState(0);
-  const [productQuantity, setProductQuantity] = useState(0);
+  const [productWeightInGrams, setProductWeightInGrams] = useState(0);
 
   const changeTextFieldHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -56,7 +56,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
 
   const selectOptionHandler = (event: any, newValue: string | null) => {
     if (newValue === null) {
-      setProductQuantity(0);
+      setProductWeightInGrams(0);
       setproductQuantityInGrams(0);
       setProductCalories(0);
       return;
@@ -71,7 +71,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
     console.log(selectedProductQuantityInGrams);
     const selectedProductCalories = productsList[productIndex].totalCalories;
 
-    setProductQuantity(1);
+    setProductWeightInGrams(100);
     setproductQuantityInGrams(selectedProductQuantityInGrams);
     setProductCalories(selectedProductCalories);
   };
@@ -81,7 +81,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   ) => {
     let quantityOfProduct = event.target.value;
     const quantityOfProductAsNumber = +quantityOfProduct;
-    setProductQuantity(quantityOfProductAsNumber);
+    setProductWeightInGrams(quantityOfProductAsNumber);
   };
 
   const calculateSumOfCalories = (
@@ -151,17 +151,17 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
       <Box display="flex">
         <TextField
           type="number"
-          label="Quantity:"
+          label="Weight in grams:"
           variant="outlined"
           onChange={changeQuantityOfProductHandler}
-          value={productQuantity}
+          value={productWeightInGrams}
         />
         <Box width="30px"></Box>
         <TextField
           value={calculateSumOfCalories(
             productCalories,
             productQuantityInGrams,
-            productQuantity
+            productWeightInGrams
           )}
           InputProps={{
             readOnly: true,
