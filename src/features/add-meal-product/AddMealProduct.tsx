@@ -36,7 +36,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const classes = useStyles();
 
   const [productsList, setProductsList] = useState<Product[]>([]);
-  const [productNameInput, setProductNameInput] = useState<string | null>("");
+  const [productName, setproductName] = useState<string | null>("");
   const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
   const [productCalories, setProductCalories] = useState(0);
   const [productWeightInGrams, setProductWeightInGrams] = useState(0);
@@ -61,7 +61,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
       setProductCalories(0);
       return;
     }
-    setProductNameInput(newValue);
+    setproductName(newValue);
     const productIndex = productsList.findIndex(
       (product) => product.name === newValue
     );
@@ -84,24 +84,24 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
     setProductWeightInGrams(quantityOfProductAsNumber);
   };
 
-  const calculateSumOfCalories = (
+  const calculateTotalCalories = (
     calories: number,
     quantityInGrams: number,
-    quantity: number
+    weightInGrams: number
   ) => {
     if (calories === 0) {
       return 0;
     }
-    const productQuantity = quantityInGrams * quantity;
-    const sumOfCalories = (calories * productQuantity) / quantityInGrams;
-    return sumOfCalories;
+
+    const totalCalories = (calories * weightInGrams) / quantityInGrams;
+    return totalCalories;
   };
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
     console.log("form submit");
     // let newProduct = {
-    //   name: productNameInput,
+    //   name: productName,
     //   totalCalories: productCalories,
     //   caloriesInGrams: productQuantityInGrams,
     //   quantity: productQuantity,
@@ -121,7 +121,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
     <Box className={classes.form}>
     <form onSubmit={submitHandler} className={classes.root}>
       <Autocomplete
-        value={productNameInput}
+        value={productName}
         onChange={selectOptionHandler}
         freeSolo
         id="search-component"
@@ -136,12 +136,12 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
             margin="normal"
             variant="outlined"
             onChange={changeTextFieldHandler}
-            value={productNameInput}
+            value={productName}
           />
         )}
       />
       <TextField
-        label="Calories per product portion: "
+        label="Calories in product portion: "
         variant="outlined"
         value={`${productCalories} kcal / ${productQuantityInGrams} g`}
         InputProps={{
@@ -158,7 +158,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
         />
         <Box width="30px"></Box>
         <TextField
-          value={calculateSumOfCalories(
+          value={calculateTotalCalories(
             productCalories,
             productQuantityInGrams,
             productWeightInGrams
