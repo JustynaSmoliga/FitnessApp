@@ -11,6 +11,7 @@ interface MealProps {
 }
 
 export interface Product {
+  id:number;
   name: string;
   totalCalories: number;
   caloriesInGrams: number;

@@ -6,13 +6,13 @@ import {
   Theme,
   Box,
 } from "@material-ui/core";
-import  Autocomplete  from "@material-ui/lab/Autocomplete";
+import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
 import { getProducts } from "../../client/productClient";
-import {Product} from "../meal/Meal";
+import { Product } from "../meal/Meal";
 
 interface AddMealProductProps {
-  showAddMealProduct:React.Dispatch<React.SetStateAction<boolean>>
+  showAddMealProduct: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -68,7 +68,6 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
 
     const selectedProductQuantityInGrams =
       productsList[productIndex].caloriesInGrams;
-    console.log(selectedProductQuantityInGrams);
     const selectedProductCalories = productsList[productIndex].totalCalories;
 
     setProductWeightInGrams(100);
@@ -116,80 +115,79 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
     props.showAddMealProduct(false);
   };
 
-
   return (
     <Box className={classes.form}>
-    <form onSubmit={submitHandler} className={classes.root}>
-      <Autocomplete
-        value={productName}
-        onChange={selectOptionHandler}
-        freeSolo
-        id="search-component"
-        selectOnFocus
-        blurOnSelect
-        handleHomeEndKeys
-        options={productsList.map((product) => product.name)}
-        renderInput={(params) => (
-          <TextField
-            {...params}
-            label="Search product"
-            margin="normal"
-            variant="outlined"
-            onChange={changeTextFieldHandler}
-            value={productName}
-          />
-        )}
-      />
-      <TextField
-        label="Calories in product portion: "
-        variant="outlined"
-        value={`${productCalories} kcal / ${productQuantityInGrams} g`}
-        InputProps={{
-          readOnly: true,
-        }}
-      />
-      <Box display="flex">
-        <TextField
-          type="number"
-          label="Weight in grams:"
-          variant="outlined"
-          onChange={changeQuantityOfProductHandler}
-          value={productWeightInGrams}
-        />
-        <Box width="30px"></Box>
-        <TextField
-          value={calculateTotalCalories(
-            productCalories,
-            productQuantityInGrams,
-            productWeightInGrams
+      <form onSubmit={submitHandler} className={classes.root}>
+        <Autocomplete
+          value={productName}
+          onChange={selectOptionHandler}
+          freeSolo
+          id="search-component"
+          selectOnFocus
+          blurOnSelect
+          handleHomeEndKeys
+          options={productsList.map((product) => product.name)}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Search product"
+              margin="normal"
+              variant="outlined"
+              onChange={changeTextFieldHandler}
+              value={productName}
+            />
           )}
+        />
+        <TextField
+          label="Calories in product portion: "
+          variant="outlined"
+          value={`${productCalories} kcal / ${productQuantityInGrams} g`}
           InputProps={{
             readOnly: true,
           }}
-          variant="outlined"
-          label="Total calories: "
         />
-      </Box>
-      <Box
-        paddingTop="5%"
-        paddingBottom="15%"
-        display="flex"
-        justifyContent="center"
-      >
-        <Button
-          variant="outlined"
-          color="secondary"
-          type="button"
-          onClick={cancelButtonClickHandler}
+        <Box display="flex">
+          <TextField
+            type="number"
+            label="Weight in grams:"
+            variant="outlined"
+            onChange={changeQuantityOfProductHandler}
+            value={productWeightInGrams}
+          />
+          <Box width="30px"></Box>
+          <TextField
+            value={calculateTotalCalories(
+              productCalories,
+              productQuantityInGrams,
+              productWeightInGrams
+            )}
+            InputProps={{
+              readOnly: true,
+            }}
+            variant="outlined"
+            label="Total calories: "
+          />
+        </Box>
+        <Box
+          paddingTop="5%"
+          paddingBottom="15%"
+          display="flex"
+          justifyContent="center"
         >
-          Cancel
-        </Button>
-        <Box width="5%"></Box>
-        <Button variant="contained" color="secondary" type="submit">
-          Save
-        </Button>
-      </Box>
-    </form>
+          <Button
+            variant="outlined"
+            color="secondary"
+            type="button"
+            onClick={cancelButtonClickHandler}
+          >
+            Cancel
+          </Button>
+          <Box width="5%"></Box>
+          <Button variant="contained" color="secondary" type="submit">
+            Save
+          </Button>
+        </Box>
+      </form>
     </Box>
   );
 };

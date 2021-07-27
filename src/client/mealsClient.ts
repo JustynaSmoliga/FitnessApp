@@ -5,24 +5,44 @@ import { Meals } from "../slice/mealsSlice";
 const meals = {
   date: moment(),
   breakfast: [
-    { name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    { name: "cucumber", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
-    { name: "banana", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    { name: "carrot", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
-    { name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    { name: "cucumber", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
-    { name: "banana", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    { name: "carrot", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
-  
+    { id: 1, name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
+    {
+      id: 2,
+      name: "cucumber",
+      totalCalories: 15,
+      caloriesInGrams: 15,
+      quantity: 1,
+    },
+    {
+      id: 3,
+      name: "banana",
+      totalCalories: 30,
+      caloriesInGrams: 15,
+      quantity: 2,
+    },
+    {
+      id: 4,
+      name: "carrot",
+      totalCalories: 15,
+      caloriesInGrams: 15,
+      quantity: 1,
+    },
   ],
   lunch: [],
   dinner: [
-    { name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    { name: "cucumber", totalCalories: 15, caloriesInGrams: 15, quantity: 1 },
+    { id: 5, name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
+    {
+      id: 6,
+      name: "cucumber",
+      totalCalories: 15,
+      caloriesInGrams: 15,
+      quantity: 1,
+    },
   ],
   supper: [],
   snacks: [
     {
+      id: 7,
       name: "popcorn",
       totalCalories: 100,
       caloriesInGrams: 100,
@@ -31,9 +51,9 @@ const meals = {
   ],
 };
 
-export function getMeals(date:Moment): AxiosResponse<Meals>{
-//@ts-ignore
-    return Promise.resolve({data:meals});
+export function getMeals(date: Moment): AxiosResponse<Meals> {
+  //@ts-ignore
+  return Promise.resolve({ data: meals });
 }
 
-
+// export function updateMeal(date:Moment, )
