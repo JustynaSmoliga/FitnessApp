@@ -5,7 +5,7 @@ import { IconButton } from "@material-ui/core";
 import Paper from "@material-ui/core/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-import { increment,decrement } from "./datePickerSlice";
+import { increment, decrement } from "./datePickerSlice";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -22,10 +22,12 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export default function DatePicker() {
+const DatePicker = () => {
   const classes = useStyles();
-  const dispatch=useDispatch();
-  const diaryDate= useSelector((state:RootState)=>state.datePicker.diaryDate);
+  const dispatch = useDispatch();
+  const diaryDate = useSelector(
+    (state: RootState) => state.datePicker.diaryDate
+  );
 
   const forwardButtonClickHandler = () => {
     dispatch(increment());
@@ -37,13 +39,22 @@ export default function DatePicker() {
 
   return (
     <Paper elevation={3} square className={classes.datePickerContainer}>
-      <IconButton color="secondary" onClick={backButtonClickHandler} >
+      <IconButton
+        color="secondary"
+        onClick={backButtonClickHandler}
+        data-testid="arrow-back"
+      >
         <ArrowBackIosOutlinedIcon />
       </IconButton>
       <p>{diaryDate.format("DD-MM-YYYY")}</p>
-      <IconButton color="secondary" onClick={forwardButtonClickHandler }>
+      <IconButton
+        color="secondary"
+        onClick={forwardButtonClickHandler}
+        data-testid="arrow-forward"
+      >
         <ArrowForwardIosOutlinedIcon />
       </IconButton>
     </Paper>
   );
-}
+};
+export default DatePicker;
