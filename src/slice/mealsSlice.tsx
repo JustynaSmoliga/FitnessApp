@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import moment, { Moment } from "moment";
+import moment from "moment";
 import { getMeals } from "../client/mealsClient";
 
 export interface MealsState extends DayMeals {}
@@ -51,25 +51,10 @@ export const fetchMeals = createAsyncThunk(
   }
 );
 
-// const addMealProduct=createAsyncThunk("meals/addMealProduct",
-// async()=>{
-//   const response=await updateMealProduct()
-// });
-
 export const mealsSlice = createSlice({
   name: "meals",
   initialState,
-  reducers: {
-    // getMeals:(state)=>{
-    //   fetchMeals(state.date)
-    // }
-    // increment: (state) => {
-    //   state.diaryDate = moment(state.diaryDate).add(1, "days");
-    // },
-    // decrement: (state) => {
-    //   state.diaryDate = moment(state.diaryDate).subtract(1, "days");
-    // },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchMeals.fulfilled, (state, action) => {
       const meals = action.payload;
@@ -79,16 +64,8 @@ export const mealsSlice = createSlice({
       state.lunch = meals.lunch;
       state.snacks = meals.snacks;
       state.supper = meals.supper;
-      // state.date = meals.date.toISOString();
-      // state.breakfast = meals.meals.BREAKFAST.mealProducts;
-      // state.dinner = meals.dinner;
-      // state.lunch = meals.lunch;
-      // state.snacks = meals.snacks;
-      // state.supper = meals.supper;
     });
   },
 });
-
-// export const {} = mealsSlice.actions;
 
 export default mealsSlice.reducer;

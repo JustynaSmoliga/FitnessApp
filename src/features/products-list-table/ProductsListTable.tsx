@@ -1,4 +1,3 @@
-import { Paper } from "@material-ui/core";
 import { MealProduct } from "../../slice/mealsSlice";
 import styles from "./ProductListTable.module.css";
 
@@ -10,7 +9,7 @@ interface ProductListTableProps {
 interface RowProps {
   name: string;
   totalCalories: number;
-  quantity: any;
+  quantity: number;
 }
 
 const Row: React.FC<RowProps> = (props) => {

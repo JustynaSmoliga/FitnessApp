@@ -11,22 +11,20 @@ import AssignmentOutlinedIcon from "@material-ui/icons/AssignmentOutlined";
 import ExitToAppOutlinedIcon from "@material-ui/icons/ExitToAppOutlined";
 import EmojiEventsOutlinedIcon from "@material-ui/icons/EmojiEventsOutlined";
 import NetworkCheckOutlinedIcon from "@material-ui/icons/NetworkCheckOutlined";
-import {NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { mainTheme } from "../../theme/customMaterialUiTheme";
 import { Divider } from "@material-ui/core";
-
 
 const useStyles = makeStyles({
   root: {
     width: 280,
     color: "rgba(74, 72, 78, 0.7)",
-   
   },
-  logo: { color:mainTheme.palette.secondary.main },
+  logo: { color: mainTheme.palette.secondary.main },
   activeLink: {
     "&.MuiListItem-button&.active": {
-        color: mainTheme.palette.text.primary,
-        background: '#e7e7e7'
+      color: mainTheme.palette.text.primary,
+      background: "#e7e7e7",
     },
   },
 });
@@ -59,7 +57,7 @@ export default function Menu() {
     <Paper className={classes.root}>
       <MenuList>
         <p className={classes.logo}>FitnessApp</p>
-        <Divider/>
+        <Divider />
         <NewMenuItem
           text="Overview"
           icon={<RemoveRedEyeOutlinedIcon fontSize="small" />}
@@ -85,7 +83,7 @@ export default function Menu() {
           icon={<ExitToAppOutlinedIcon fontSize="small" />}
           linkPath="/login"
         />
-        <Divider/>
+        <Divider />
         <p>Personal data button</p>
       </MenuList>
     </Paper>

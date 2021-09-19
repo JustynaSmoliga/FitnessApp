@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export interface Product {
-  id: number;
+  id: string;
   name: string;
   totalCalories: number;
   caloriesInGrams: number;
@@ -9,7 +9,7 @@ export interface Product {
 }
 
 interface ProductDto {
-  id: number;
+  id: string;
   name: string;
   kcal: number;
   weightInGrams: number;

@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import configureStore from "redux-mock-store";
 import DatePicker from "./DatePicker";
 import * as DatePickerSlice from "./datePickerSlice";
+
 const middlewares: any = [];
 const mockStore = configureStore(middlewares);
 const initialState = {

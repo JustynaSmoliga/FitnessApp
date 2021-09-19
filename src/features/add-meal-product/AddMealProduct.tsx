@@ -8,8 +8,7 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
-import { getProducts } from "../../client/productClient";
-import { Product } from "../meal/Meal";
+import { getProducts, Product } from "../../client/productClient";
 
 interface AddMealProductProps {
   showAddMealProduct: React.Dispatch<React.SetStateAction<boolean>>;
@@ -19,7 +18,6 @@ const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
       "& .MuiTextField-root": {
-        // margin: theme.spacing(1),
         marginBottom: "5%",
       },
     },
@@ -49,8 +47,8 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
       return;
     } else {
       const enteredProduct = event.target.value;
-      const products = await getProducts(enteredProduct);
-      setProductsList(products);
+      const productsPrompt = await getProducts(enteredProduct);
+      setProductsList(productsPrompt);
     }
   };
 
@@ -98,15 +96,8 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
 
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("form submit");
-    // let newProduct = {
-    //   name: productName,
-    //   totalCalories: productCalories,
-    //   caloriesInGrams: productQuantityInGrams,
-    //   quantity: productQuantity,
-    // };
 
-    //wywolac akcje z reduxa, w ktorej wysylamy na backend newProduct a nastepnie znow pobieramy cala liste produktow.
+    //TODO
 
     props.showAddMealProduct(false);
   };

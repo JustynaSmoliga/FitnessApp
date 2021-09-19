@@ -1,10 +1,8 @@
 import axios from "axios";
-import { AxiosResponse } from "axios";
-import moment, { Moment } from "moment";
-import { MealProduct, DayMeals, Meal } from "../slice/mealsSlice";
+import { DayMeals, Meal } from "../slice/mealsSlice";
 import { MealType } from "../slice/mealsSlice";
 
-interface DayMealDto {
+interface DayMealsDto {
   id: string;
   date: string;
   meals: { [prop in MealType]: MealDto };
@@ -26,15 +24,14 @@ interface MealDto {
 export async function getMeals(date: string): Promise<DayMeals> {
   const response = await axios.get(`http://localhost:8080/meals/${date}`, {});
 
-  const dayMealDto: DayMealDto = response.data;
-  const meals: DayMeals = convertDayMealDtoToDayMeal(dayMealDto);
+  const dayMealsDto: DayMealsDto = response.data;
+  const dayMeals: DayMeals = convertDayMealDtoToDayMeal(dayMealsDto);
 
-  return meals;
+  return dayMeals;
 }
 
-//TODO zamienic Meals na DayMeal
-function convertDayMealDtoToDayMeal(dayMealDto: DayMealDto): DayMeals {
-  const meals: DayMeals = {
+function convertDayMealDtoToDayMeal(dayMealDto: DayMealsDto): DayMeals {
+  const dayMeals: DayMeals = {
     date: dayMealDto.date,
     breakfast: convertMealDtoToMeal(dayMealDto.meals.BREAKFAST),
     dinner: convertMealDtoToMeal(dayMealDto.meals.DINNER),
@@ -42,7 +39,7 @@ function convertDayMealDtoToDayMeal(dayMealDto: DayMealDto): DayMeals {
     snacks: convertMealDtoToMeal(dayMealDto.meals.SNACKS),
     supper: convertMealDtoToMeal(dayMealDto.meals.SUPPER),
   };
-  return meals;
+  return dayMeals;
 }
 
 function convertMealDtoToMeal(mealDto: MealDto): Meal {
@@ -53,10 +50,3 @@ function convertMealDtoToMeal(mealDto: MealDto): Meal {
   };
   return meal;
 }
-
-// function convertMealProductDtoToMealProduct(
-//   mealProductDto: MealProductDto
-// ): MealProduct {
-//   const mealProduct: MealProduct = { ...mealProductDto };
-//   return mealProduct;
-// }

@@ -1,9 +1,7 @@
-import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
-import WrapperCard from "./features/wrapperCard/WrapperCard";
 import Diary from "./features/diary/Diary";
 
 function App() {
@@ -17,7 +15,7 @@ function App() {
           <p>Login</p>
         </Route>
         <PrivateRoute path="/overview">
-          <WrapperCard>Overview</WrapperCard>
+          <p>Overview</p>
         </PrivateRoute>
         <PrivateRoute path="/diary">
           <Diary />
