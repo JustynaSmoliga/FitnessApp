@@ -1,8 +1,8 @@
-import React from "react";
 import { Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
 import { Counter } from "./features/counter/Counter";
 import "./App.css";
+import Diary from "./features/diary/Diary";
 
 function App() {
   return (
@@ -18,7 +18,7 @@ function App() {
           <p>Overview</p>
         </PrivateRoute>
         <PrivateRoute path="/diary">
-          <p>My diary</p>
+          <Diary />
         </PrivateRoute>
         <PrivateRoute path="/goals">
           <p>My goals</p>

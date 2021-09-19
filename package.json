@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^4.11.4",
     "@material-ui/icons": "^4.11.2",
+    "@material-ui/lab": "^4.0.0-alpha.59",
     "@reduxjs/toolkit": "^1.6.0",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
@@ -14,11 +15,15 @@
     "@types/react": "^16.14.8",
     "@types/react-dom": "^16.9.13",
     "@types/react-redux": "^7.1.16",
+    "@types/redux-mock-store": "^1.0.3",
+    "axios": "^0.21.1",
+    "moment": "^2.29.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-redux": "^7.2.4",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
+    "react-swipeable-views": "^0.14.0",
     "typescript": "^4.1.6"
   },
   "scripts": {
@@ -43,6 +48,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.7"
+    "@types/react-router-dom": "^5.1.7",
+    "@types/react-swipeable-views": "^0.13.0",
+    "redux-mock-store": "^1.5.4"
   }
 }
