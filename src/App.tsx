@@ -1,6 +1,5 @@
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
-import { Counter } from "./features/counter/Counter";
 import "./App.css";
 import Diary from "./features/diary/Diary";
 
@@ -26,8 +25,8 @@ function App() {
         <PrivateRoute path="/weights">
           <p>My weights</p>
         </PrivateRoute>
-        <Route path="/" exact>
-          <Counter />
+        <Route path="/">
+          <Redirect to="/diary" />
         </Route>
         <Route path="/*">
           <p>Page not found</p>
