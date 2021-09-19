@@ -1,6 +1,7 @@
 import axios from "axios";
 import { DayMeals, Meal } from "../slice/mealsSlice";
 import { MealType } from "../slice/mealsSlice";
+import apiUrl from "../app/api";
 
 interface DayMealsDto {
   id: string;
@@ -22,7 +23,7 @@ interface MealDto {
 }
 
 export async function getMeals(date: string): Promise<DayMeals> {
-  const response = await axios.get(`http://localhost:8080/meals/${date}`, {});
+  const response = await axios.get(`${apiUrl}/meals/${date}`, {});
 
   const dayMealsDto: DayMealsDto = response.data;
   const dayMeals: DayMeals = convertDayMealDtoToDayMeal(dayMealsDto);

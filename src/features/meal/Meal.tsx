@@ -11,19 +11,11 @@ interface MealProps {
   date: string;
 }
 
-export interface Product {
-  id: number;
-  name: string;
-  totalCalories: number;
-  caloriesInGrams: number;
-  quantity: number;
-}
-
 const Meal: React.FC<MealProps> = (props) => {
-  const [addMealProductShowed, setAddMealProductShowed] = useState(false);
+  const [addMealProductVisible, setAddMealProductVisible] = useState(false);
 
   const addProductButtonClickHandler = () => {
-    setAddMealProductShowed(true);
+    setAddMealProductVisible(true);
   };
 
   return (
@@ -35,11 +27,11 @@ const Meal: React.FC<MealProps> = (props) => {
             productsEaten={props.productsEaten}
             date={props.date}
           />
-          {addMealProductShowed && (
-            <AddMealProduct showAddMealProduct={setAddMealProductShowed} />
+          {addMealProductVisible && (
+            <AddMealProduct showAddMealProduct={setAddMealProductVisible} />
           )}
         </Box>
-        {!addMealProductShowed && (
+        {!addMealProductVisible && (
           <Box paddingBottom="4%">
             <Button
               variant="contained"

@@ -11,12 +11,13 @@ const Meals = () => {
   const dateIsoFormat = useSelector(
     (state: RootState) => state.datePicker.diaryDate
   );
-  const date = moment(dateIsoFormat).format("DD-MM-YYYY");
+
   const meals = useSelector((state: RootState) => state.meals);
 
   useEffect(() => {
+    const date = moment(dateIsoFormat).format("DD-MM-YYYY");
     dispatch(fetchMeals(date));
-  }, [date, dispatch]);
+  }, [dateIsoFormat, dispatch]);
 
   return (
     <Box display="flex" flexDirection="row" flexWrap="wrap">
