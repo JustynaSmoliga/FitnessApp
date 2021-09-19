@@ -1,59 +1,70 @@
+import axios from "axios";
 import { AxiosResponse } from "axios";
 import moment, { Moment } from "moment";
-import { Meals } from "../slice/mealsSlice";
+import { MealProduct, DayMeals, Meal } from "../slice/mealsSlice";
+import { MealType } from "../slice/mealsSlice";
 
-const meals = {
-  date: moment(),
-  breakfast: [
-    { id: 1, name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    {
-      id: 2,
-      name: "cucumber",
-      totalCalories: 15,
-      caloriesInGrams: 15,
-      quantity: 1,
-    },
-    {
-      id: 3,
-      name: "banana",
-      totalCalories: 30,
-      caloriesInGrams: 15,
-      quantity: 2,
-    },
-    {
-      id: 4,
-      name: "carrot",
-      totalCalories: 15,
-      caloriesInGrams: 15,
-      quantity: 1,
-    },
-  ],
-  lunch: [],
-  dinner: [
-    { id: 5, name: "egg", totalCalories: 30, caloriesInGrams: 15, quantity: 2 },
-    {
-      id: 6,
-      name: "cucumber",
-      totalCalories: 15,
-      caloriesInGrams: 15,
-      quantity: 1,
-    },
-  ],
-  supper: [],
-  snacks: [
-    {
-      id: 7,
-      name: "popcorn",
-      totalCalories: 100,
-      caloriesInGrams: 100,
-      quantity: 1,
-    },
-  ],
-};
-
-export function getMeals(date: Moment): AxiosResponse<Meals> {
-  //@ts-ignore
-  return Promise.resolve({ data: meals });
+interface DayMealDto {
+  id: string;
+  date: Date;
+  meals: { [prop in MealType]: MealDto };
 }
 
-// export function updateMeal(date:Moment, )
+interface MealProductDto {
+  id: string;
+  name: string;
+  kcal: number;
+  weightInGrams: number;
+}
+
+interface MealDto {
+  id: string;
+  mealType: MealType;
+  mealProducts: MealProductDto[];
+}
+
+export async function getMeals(date: string): Promise<DayMeals> {
+  const response = await axios.get(`http://localhost:8080/meals/${date}`, {});
+
+  const dayMealDto: DayMealDto = response.data;
+  const meals: DayMeals = convertDayMealDtoToDayMeal(dayMealDto);
+  // const meals: Meals = {
+  //   date: dayMealDto.date,
+  //   breakfast: dayMealDto.meals.BREAKFAST,
+  //   dinner: dayMealDto.meals.DINNER,
+  //   lunch: dayMealDto.meals.LUNCH,
+  //   snacks: dayMealDto.meals.SNACKS,
+  //   supper: dayMealDto.meals.SUPPER,
+  // };
+
+  return meals;
+}
+
+//TODO zamienic Meals na DayMeal
+function convertDayMealDtoToDayMeal(dayMealDto: DayMealDto): DayMeals {
+  const meals: DayMeals = {
+    date: dayMealDto.date.toISOString(),
+    breakfast: convertMealDtoToMeal(dayMealDto.meals.BREAKFAST),
+    dinner: convertMealDtoToMeal(dayMealDto.meals.DINNER),
+    lunch: convertMealDtoToMeal(dayMealDto.meals.LUNCH),
+    snacks: convertMealDtoToMeal(dayMealDto.meals.SNACKS),
+    supper: convertMealDtoToMeal(dayMealDto.meals.SUPPER),
+  };
+  return meals;
+}
+
+function convertMealDtoToMeal(mealDto: MealDto): Meal {
+  const meal: Meal = {
+    id: mealDto.id,
+    mealType: mealDto.mealType,
+    mealProducts: mealDto.mealProducts,
+  };
+  return meal;
+}
+
+// function convertMealProductDtoToMealProduct(
+//   mealProductDto: MealProductDto
+// ): MealProduct {
+//   const mealProduct: MealProduct = { ...mealProductDto };
+//   return mealProduct;
+// }

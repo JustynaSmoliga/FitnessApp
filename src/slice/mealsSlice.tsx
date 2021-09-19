@@ -2,55 +2,52 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import moment, { Moment } from "moment";
 import { getMeals } from "../client/mealsClient";
 
-export interface MealsState extends Meals {}
+export interface MealsState extends DayMeals {}
 
-export interface Product {
-  id:number;
-  name: string;
-  totalCalories: number;
-  caloriesInGrams: number;
-  quantity: number;
-}
-
-enum MealType {
-  BREAKFAST,
-  LUNCH,
-  DINNER,
-  SUPPER,
-  SNACKS,
+export enum MealType {
+  BREAKFAST = "BREAKFAST",
+  LUNCH = "LUNCH",
+  DINNER = "DINNER",
+  SUPPER = "SUPPER",
+  SNACKS = "SNACKS",
 }
 
 export interface MealProduct {
-  id: number;
-  name:string;
+  id: string;
+  name: string;
+  kcal: number;
   weightInGrams: number;
-  date: Moment;
-  mealType: MealType;
 }
 
-export interface Meals {
-  date: Moment;
-  breakfast: Product[];
-  lunch: Product[];
-  dinner: Product[];
-  supper: Product[];
-  snacks: Product[];
+export interface Meal {
+  id: string;
+  mealType: MealType;
+  mealProducts: MealProduct[];
+}
+
+export interface DayMeals {
+  date: string;
+  breakfast: Meal;
+  lunch: Meal;
+  dinner: Meal;
+  supper: Meal;
+  snacks: Meal;
 }
 
 const initialState: MealsState = {
-  date: moment(),
-  breakfast: [],
-  lunch: [],
-  dinner: [],
-  supper: [],
-  snacks: [],
+  date: moment().toISOString(),
+  breakfast: { id: "", mealType: MealType.BREAKFAST, mealProducts: [] },
+  lunch: { id: "", mealType: MealType.LUNCH, mealProducts: [] },
+  dinner: { id: "", mealType: MealType.DINNER, mealProducts: [] },
+  supper: { id: "", mealType: MealType.SUPPER, mealProducts: [] },
+  snacks: { id: "", mealType: MealType.SNACKS, mealProducts: [] },
 };
 
 export const fetchMeals = createAsyncThunk(
   "meals/fetchMeals",
-  async (date: Moment) => {
+  async (date: string) => {
     const response = await getMeals(date);
-    return response.data;
+    return response;
   }
 );
 
@@ -82,6 +79,12 @@ export const mealsSlice = createSlice({
       state.lunch = meals.lunch;
       state.snacks = meals.snacks;
       state.supper = meals.supper;
+      // state.date = meals.date.toISOString();
+      // state.breakfast = meals.meals.BREAKFAST.mealProducts;
+      // state.dinner = meals.dinner;
+      // state.lunch = meals.lunch;
+      // state.snacks = meals.snacks;
+      // state.supper = meals.supper;
     });
   },
 });

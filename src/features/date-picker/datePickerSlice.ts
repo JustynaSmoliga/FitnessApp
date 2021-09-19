@@ -2,11 +2,11 @@ import { createSlice } from "@reduxjs/toolkit";
 import moment, { Moment } from "moment";
 
 export interface DatePickerState {
-  diaryDate: Moment;
+  diaryDate: string;
 }
 
 const initialState: DatePickerState = {
-  diaryDate: moment(),
+  diaryDate: moment().toISOString(),
 };
 
 export const datePickerSlice = createSlice({
@@ -14,10 +14,14 @@ export const datePickerSlice = createSlice({
   initialState,
   reducers: {
     increment: (state) => {
-      state.diaryDate = moment(state.diaryDate).add(1, "days");
+      state.diaryDate = moment(state.diaryDate).add(1, "days").toISOString();
+      // state.diaryDate.toISOString();
     },
     decrement: (state) => {
-      state.diaryDate = moment(state.diaryDate).subtract(1, "days");
+      state.diaryDate = moment(state.diaryDate)
+        .subtract(1, "days")
+        .toISOString();
+      // state.diaryDate.toISOString();
     },
   },
 });

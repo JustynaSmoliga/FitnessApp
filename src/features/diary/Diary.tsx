@@ -3,18 +3,21 @@ import { useEffect } from "react";
 import DatePicker from "../date-picker/DatePicker";
 import DiaryNavBar from "../diary-navbar/DiaryNavBar";
 import Meal from "../meal/Meal";
-import {fetchMeals} from '../../slice/mealsSlice';
+import { fetchMeals } from "../../slice/mealsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
-
+import moment from "moment";
 
 const Diary = () => {
-  const dispatch=useDispatch();
-  const date=useSelector((state:RootState)=>state.datePicker.diaryDate);
-  const meals=useSelector((state:RootState)=>state.meals);
-  
+  const dispatch = useDispatch();
+  const dateIsoFormat = useSelector(
+    (state: RootState) => state.datePicker.diaryDate
+  );
+  const date = moment(dateIsoFormat).format("DD-MM-YYYY");
+  const meals = useSelector((state: RootState) => state.meals);
+
   useEffect(() => {
-    dispatch(fetchMeals(date))
+    dispatch(fetchMeals(date));
   }, [date, dispatch]);
 
   return (
@@ -24,8 +27,8 @@ const Diary = () => {
       <Box display="flex" flexDirection="row">
         <Meal
           title="BREAKFAST"
-          productsEaten={meals.breakfast}
-          date={meals.date.toDate()}
+          productsEaten={meals.breakfast.mealProducts}
+          date={meals.date}
         />
       </Box>
     </Box>

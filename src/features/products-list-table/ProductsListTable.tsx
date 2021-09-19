@@ -1,10 +1,10 @@
 import { Paper } from "@material-ui/core";
-import { Product } from "../../slice/mealsSlice";
+import { MealProduct } from "../../slice/mealsSlice";
 import styles from "./ProductListTable.module.css";
 
 interface ProductListTableProps {
-  date: Date;
-  productsEaten: Product[];
+  date: string;
+  productsEaten: MealProduct[];
 }
 
 interface RowProps {
@@ -35,9 +35,9 @@ const ProductListTable: React.FC<ProductListTableProps> = (props) => {
         {props.productsEaten.map((product) => (
           <Row
             name={product.name}
-            totalCalories={product.totalCalories}
-            quantity={product.quantity}
-            key={product.name}
+            totalCalories={product.kcal}
+            quantity={product.weightInGrams}
+            key={product.id}
           />
         ))}
       </thead>

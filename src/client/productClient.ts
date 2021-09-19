@@ -1,14 +1,21 @@
 import axios from "axios";
-import { Product } from "../slice/mealsSlice";
+
+export interface Product {
+  id: number;
+  name: string;
+  totalCalories: number;
+  caloriesInGrams: number;
+  quantity: number;
+}
 
 interface ProductDto {
-  id:number;
+  id: number;
   name: string;
   kcal: number;
   weightInGrams: number;
 }
 
-export async function getProducts(productName: string):Promise<Product[]> {
+export async function getProducts(productName: string): Promise<Product[]> {
   const response = await axios.get("http://localhost:8080/products", {
     params: { productName: productName },
   });
@@ -17,7 +24,7 @@ export async function getProducts(productName: string):Promise<Product[]> {
 
   const products: Product[] = productDtos.map((productDto) => {
     const product: Product = {
-      id:productDto.id,
+      id: productDto.id,
       caloriesInGrams: productDto.weightInGrams,
       name: productDto.name,
       totalCalories: productDto.kcal,

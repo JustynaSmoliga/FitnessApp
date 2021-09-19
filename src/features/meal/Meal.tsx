@@ -3,15 +3,16 @@ import React, { useState } from "react";
 import styles from "./Meal.module.css";
 import ProductsListTable from "../products-list-table/ProductsListTable";
 import AddMealProduct from "../add-meal-product/AddMealProduct";
+import { MealProduct } from "../../slice/mealsSlice";
 
 interface MealProps {
   title: string;
-  productsEaten: Product[];
-  date: Date;
+  productsEaten: MealProduct[];
+  date: string;
 }
 
 export interface Product {
-  id:number;
+  id: number;
   name: string;
   totalCalories: number;
   caloriesInGrams: number;
@@ -35,9 +36,7 @@ const Meal: React.FC<MealProps> = (props) => {
             date={props.date}
           />
           {addMealProductShowed && (
-            <AddMealProduct
-              showAddMealProduct={setAddMealProductShowed}
-            />
+            <AddMealProduct showAddMealProduct={setAddMealProductShowed} />
           )}
         </Box>
         {!addMealProductShowed && (

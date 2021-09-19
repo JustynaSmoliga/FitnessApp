@@ -46,7 +46,9 @@ const DatePicker = () => {
       >
         <ArrowBackIosOutlinedIcon />
       </IconButton>
-      <p>{diaryDate.format("DD-MM-YYYY")}</p>
+      {/* <p>{diaryDate.format("DD-MM-YYYY")}</p> */}
+      <p>{diaryDate}</p>
+
       <IconButton
         color="secondary"
         onClick={forwardButtonClickHandler}
