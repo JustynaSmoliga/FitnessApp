@@ -6,6 +6,7 @@ import Paper from "@material-ui/core/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../app/store";
 import { increment, decrement } from "./datePickerSlice";
+import moment from "moment";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -46,9 +47,7 @@ const DatePicker = () => {
       >
         <ArrowBackIosOutlinedIcon />
       </IconButton>
-      {/* <p>{diaryDate.format("DD-MM-YYYY")}</p> */}
-      <p>{diaryDate}</p>
-
+      <p>{moment(diaryDate).format("DD-MM-YYYY")}</p>
       <IconButton
         color="secondary"
         onClick={forwardButtonClickHandler}

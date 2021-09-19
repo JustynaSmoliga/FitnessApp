@@ -6,7 +6,7 @@ import { MealType } from "../slice/mealsSlice";
 
 interface DayMealDto {
   id: string;
-  date: Date;
+  date: string;
   meals: { [prop in MealType]: MealDto };
 }
 
@@ -28,14 +28,6 @@ export async function getMeals(date: string): Promise<DayMeals> {
 
   const dayMealDto: DayMealDto = response.data;
   const meals: DayMeals = convertDayMealDtoToDayMeal(dayMealDto);
-  // const meals: Meals = {
-  //   date: dayMealDto.date,
-  //   breakfast: dayMealDto.meals.BREAKFAST,
-  //   dinner: dayMealDto.meals.DINNER,
-  //   lunch: dayMealDto.meals.LUNCH,
-  //   snacks: dayMealDto.meals.SNACKS,
-  //   supper: dayMealDto.meals.SUPPER,
-  // };
 
   return meals;
 }
@@ -43,7 +35,7 @@ export async function getMeals(date: string): Promise<DayMeals> {
 //TODO zamienic Meals na DayMeal
 function convertDayMealDtoToDayMeal(dayMealDto: DayMealDto): DayMeals {
   const meals: DayMeals = {
-    date: dayMealDto.date.toISOString(),
+    date: dayMealDto.date,
     breakfast: convertMealDtoToMeal(dayMealDto.meals.BREAKFAST),
     dinner: convertMealDtoToMeal(dayMealDto.meals.DINNER),
     lunch: convertMealDtoToMeal(dayMealDto.meals.LUNCH),

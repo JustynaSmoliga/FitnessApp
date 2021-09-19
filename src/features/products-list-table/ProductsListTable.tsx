@@ -30,7 +30,7 @@ const ProductListTable: React.FC<ProductListTableProps> = (props) => {
         <tr>
           <th>Product name</th>
           <th>Total calories [kcal]</th>
-          <th>Quantity</th>
+          <th>Weight [g]</th>
         </tr>
         {props.productsEaten.map((product) => (
           <Row
