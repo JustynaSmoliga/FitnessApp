@@ -7,8 +7,9 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import Box from "@material-ui/core/Box";
 import PoolOutlinedIcon from "@material-ui/icons/PoolOutlined";
-import EmojiFoodBeverageOutlinedIcon from '@material-ui/icons/EmojiFoodBeverageOutlined';
-import ExposureOutlinedIcon from '@material-ui/icons/ExposureOutlined';
+import EmojiFoodBeverageOutlinedIcon from "@material-ui/icons/EmojiFoodBeverageOutlined";
+import ExposureOutlinedIcon from "@material-ui/icons/ExposureOutlined";
+import Meals from "../meals/Meals";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,7 +48,7 @@ function a11yProps(index: any) {
 const useStyles = makeStyles((theme: Theme) => ({
   root: {
     backgroundColor: theme.palette.background.paper,
-    width:'100%'
+    width: "100%",
   },
 }));
 
@@ -98,7 +99,17 @@ export default function DiaryNavBar() {
             }
             {...a11yProps(1)}
           />
-          <Tab label={<div><ExposureOutlinedIcon style={{ verticalAlign: "middle", marginRight: "15px" }}/>Weight</div>} {...a11yProps(2)} />
+          <Tab
+            label={
+              <div>
+                <ExposureOutlinedIcon
+                  style={{ verticalAlign: "middle", marginRight: "15px" }}
+                />
+                Weight
+              </div>
+            }
+            {...a11yProps(2)}
+          />
         </Tabs>
       </AppBar>
       <SwipeableViews
@@ -107,10 +118,10 @@ export default function DiaryNavBar() {
         onChangeIndex={handleChangeIndex}
       >
         <TabPanel value={value} index={0} dir={theme.direction}>
-          Meals component
+          <Meals />
         </TabPanel>
         <TabPanel value={value} index={1} dir={theme.direction}>
-          Exercises component 
+          Exercises component
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
           Weight component
