@@ -2,6 +2,7 @@ import axios from "axios";
 import { DayMeals, Meal } from "../slice/mealsSlice";
 import { MealType } from "../slice/mealsSlice";
 import apiUrl from "../app/api";
+import { AddMealProductForm } from "../features/add-meal-product/AddMealProduct";
 
 interface DayMealsDto {
   id: string;
@@ -29,6 +30,15 @@ export async function getMeals(date: string): Promise<DayMeals> {
   const dayMeals: DayMeals = convertDayMealDtoToDayMeal(dayMealsDto);
 
   return dayMeals;
+}
+
+export async function addProductToMeal(product: AddMealProductForm) {
+  const response = await axios.post(`${apiUrl}/meals/products`, product);
+  const newProductListDto = response.data;
+  const newProductList: DayMeals =
+    convertDayMealDtoToDayMeal(newProductListDto);
+
+  return newProductList;
 }
 
 function convertDayMealDtoToDayMeal(dayMealDto: DayMealsDto): DayMeals {

@@ -8,10 +8,20 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addProductToMeal } from "../../client/mealsClient";
 import { getProducts, Product } from "../../client/productClient";
+import { addProduct } from "../../slice/mealsSlice";
+
+export interface AddMealProductForm {
+  productId: string;
+  mealId: string;
+  weightInGrams: number;
+}
 
 interface AddMealProductProps {
   showAddMealProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  mealId: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,10 +44,13 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const classes = useStyles();
 
   const [productsList, setProductsList] = useState<Product[]>([]);
-  const [productName, setproductName] = useState<string | null>("");
-  const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
+  const [productName, setProductName] = useState<string | null>("");
+  const [productQuantityInGrams, setProductQuantityInGrams] = useState(0);
   const [productCalories, setProductCalories] = useState(0);
   const [productWeightInGrams, setProductWeightInGrams] = useState(0);
+  const [productId, setProductId] = useState("");
+
+  const dispatch = useDispatch();
 
   const changeTextFieldHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -55,22 +68,24 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const selectOptionHandler = (event: any, newValue: string | null) => {
     if (newValue === null) {
       setProductWeightInGrams(0);
-      setproductQuantityInGrams(0);
+      setProductQuantityInGrams(0);
       setProductCalories(0);
       return;
     }
-    setproductName(newValue);
+    setProductName(newValue);
     const productIndex = productsList.findIndex(
       (product) => product.name === newValue
     );
 
     const selectedProductQuantityInGrams =
-      productsList[productIndex].caloriesInGrams;
-    const selectedProductCalories = productsList[productIndex].totalCalories;
+      productsList[productIndex].weightInGrams;
+    const selectedProductCalories = productsList[productIndex].kcal;
+    const selectedProductId = productsList[productIndex].id;
 
     setProductWeightInGrams(100);
-    setproductQuantityInGrams(selectedProductQuantityInGrams);
+    setProductQuantityInGrams(selectedProductQuantityInGrams);
     setProductCalories(selectedProductCalories);
+    setProductId(selectedProductId);
   };
 
   const changeQuantityOfProductHandler = (
@@ -97,7 +112,13 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    //TODO
+    const product: AddMealProductForm = {
+      mealId: props.mealId,
+      productId: productId,
+      weightInGrams: productWeightInGrams,
+    };
+
+    dispatch(addProduct(product));
 
     props.showAddMealProduct(false);
   };

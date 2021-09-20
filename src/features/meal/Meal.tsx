@@ -3,15 +3,15 @@ import React, { useState } from "react";
 import styles from "./Meal.module.css";
 import ProductsListTable from "../products-list-table/ProductsListTable";
 import AddMealProduct from "../add-meal-product/AddMealProduct";
-import { MealProduct } from "../../slice/mealsSlice";
+import { Meal } from "../../slice/mealsSlice";
 
 interface MealProps {
   title: string;
-  productsEaten: MealProduct[];
+  meal: Meal;
   date: string;
 }
 
-const Meal: React.FC<MealProps> = (props) => {
+const MealComponent: React.FC<MealProps> = (props) => {
   const [addMealProductVisible, setAddMealProductVisible] = useState(false);
 
   const addProductButtonClickHandler = () => {
@@ -24,11 +24,14 @@ const Meal: React.FC<MealProps> = (props) => {
         <p className={styles.title}>{props.title}</p>
         <Box display="flex" minWidth="490px" justifyContent="center">
           <ProductsListTable
-            productsEaten={props.productsEaten}
+            productsEaten={props.meal.mealProducts}
             date={props.date}
           />
           {addMealProductVisible && (
-            <AddMealProduct showAddMealProduct={setAddMealProductVisible} />
+            <AddMealProduct
+              showAddMealProduct={setAddMealProductVisible}
+              mealId={props.meal.id}
+            />
           )}
         </Box>
         {!addMealProductVisible && (
@@ -48,4 +51,4 @@ const Meal: React.FC<MealProps> = (props) => {
   );
 };
 
-export default Meal;
+export default MealComponent;
