@@ -19,10 +19,20 @@ const MealComponent: React.FC<MealProps> = (props) => {
   };
 
   return (
-    <div>
+    <Box
+      display="flex"
+      justifyContent="center"
+      alignContent="center"
+      margin="15px 15px"
+    >
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
-        <Box display="flex" minWidth="490px" justifyContent="center">
+        <Box
+          display="flex"
+          minWidth="550px"
+          // maxHeight="200px"
+          justifyContent="center"
+        >
           <ProductsListTable
             productsEaten={props.meal.mealProducts}
             date={props.date}
@@ -35,7 +45,7 @@ const MealComponent: React.FC<MealProps> = (props) => {
           )}
         </Box>
         {!addMealProductVisible && (
-          <Box paddingBottom="4%">
+          <Box paddingBottom="4%" paddingTop="4%">
             <Button
               variant="contained"
               color="secondary"
@@ -47,7 +57,7 @@ const MealComponent: React.FC<MealProps> = (props) => {
           </Box>
         )}
       </Paper>
-    </div>
+    </Box>
   );
 };
 

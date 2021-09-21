@@ -9,7 +9,6 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addProductToMeal } from "../../client/mealsClient";
 import { getProducts, Product } from "../../client/productClient";
 import { addProduct } from "../../slice/mealsSlice";
 
@@ -29,13 +28,28 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       "& .MuiTextField-root": {
         marginBottom: "5%",
+        // width: "50%",
       },
     },
-    form: {
-      width: "170px",
-      marginLeft: "1%",
+    formContainer: {
+      display: "flex",
+      flexDirection: "column",
+      width: "300px",
+      // marginLeft: "3%",
       marginRight: "3%",
-      paddingTop: "2%",
+      // paddingTop: "2%",
+      // alignContent: "center",
+    },
+    inputAlignment: {
+      width: "100%",
+    },
+    addProductParagraph: {
+      marginTop: "0",
+      marginBottom: "0",
+      textAlign: "left",
+      color: theme.palette.secondary.dark,
+      // fontWeight: "bold",
+      // fontSize: "1rem",
     },
   })
 );
@@ -128,8 +142,9 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   };
 
   return (
-    <Box className={classes.form}>
+    <Box className={classes.formContainer}>
       <form onSubmit={submitHandler} className={classes.root}>
+        <p className={classes.addProductParagraph}>ADD NEW PRODUCT:</p>
         <Autocomplete
           value={productName}
           onChange={selectOptionHandler}
@@ -151,22 +166,23 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
           )}
         />
         <TextField
-          label="Calories in product portion: "
+          label="Calories in product portion"
           variant="outlined"
           value={`${productCalories} kcal / ${productQuantityInGrams} g`}
           InputProps={{
             readOnly: true,
           }}
+          className={classes.inputAlignment}
         />
-        <Box display="flex">
+        <Box display="flex" width="100%">
           <TextField
             type="number"
-            label="Weight in grams:"
+            label="Weight[g]"
             variant="outlined"
             onChange={changeQuantityOfProductHandler}
             value={productWeightInGrams}
           />
-          <Box width="30px"></Box>
+          <Box width="10%"></Box>
           <TextField
             value={calculateTotalCalories(
               productCalories,
@@ -177,7 +193,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
               readOnly: true,
             }}
             variant="outlined"
-            label="Total calories: "
+            label="Calories"
           />
         </Box>
         <Box
@@ -195,7 +211,12 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
             Cancel
           </Button>
           <Box width="5%"></Box>
-          <Button variant="contained" color="secondary" type="submit">
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            disabled={!productCalories}
+          >
             Save
           </Button>
         </Box>

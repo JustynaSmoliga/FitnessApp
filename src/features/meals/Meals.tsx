@@ -20,7 +20,12 @@ const Meals = () => {
   }, [dateIsoFormat, dispatch]);
 
   return (
-    <Box display="flex" flexDirection="row" flexWrap="wrap">
+    <Box
+      display="flex"
+      flexDirection="row"
+      flexWrap="wrap"
+      justifyContent="center"
+    >
       <Meal title="BREAKFAST" date={meals.date} meal={meals.breakfast} />
       <Meal title="DINNER" date={meals.date} meal={meals.dinner} />
       <Meal title="LUNCH" date={meals.date} meal={meals.lunch} />
