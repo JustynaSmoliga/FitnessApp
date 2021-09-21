@@ -28,17 +28,13 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       "& .MuiTextField-root": {
         marginBottom: "5%",
-        // width: "50%",
       },
     },
     formContainer: {
       display: "flex",
       flexDirection: "column",
       width: "300px",
-      // marginLeft: "3%",
       marginRight: "3%",
-      // paddingTop: "2%",
-      // alignContent: "center",
     },
     inputAlignment: {
       width: "100%",
@@ -48,8 +44,6 @@ const useStyles = makeStyles((theme: Theme) =>
       marginBottom: "0",
       textAlign: "left",
       color: theme.palette.secondary.dark,
-      // fontWeight: "bold",
-      // fontSize: "1rem",
     },
   })
 );

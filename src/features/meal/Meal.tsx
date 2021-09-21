@@ -27,12 +27,7 @@ const MealComponent: React.FC<MealProps> = (props) => {
     >
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
-        <Box
-          display="flex"
-          minWidth="550px"
-          // maxHeight="200px"
-          justifyContent="center"
-        >
+        <Box display="flex" minWidth="550px" justifyContent="center">
           <ProductsListTable
             productsEaten={props.meal.mealProducts}
             date={props.date}

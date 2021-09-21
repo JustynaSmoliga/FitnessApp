@@ -36,11 +36,10 @@ export async function addProductToMeal(
   product: AddMealProductForm
 ): Promise<DayMeals> {
   const response = await axios.post(`${apiUrl}/meals/products`, product);
-  const newProductListDto = response.data;
-  const newProductList: DayMeals =
-    convertDayMealDtoToDayMeal(newProductListDto);
+  const dayMealsDto: DayMealsDto = response.data;
+  const dayMeals: DayMeals = convertDayMealDtoToDayMeal(dayMealsDto);
 
-  return newProductList;
+  return dayMeals;
 }
 
 export async function deleteProductFromMeal(
