@@ -32,13 +32,28 @@ export async function getMeals(date: string): Promise<DayMeals> {
   return dayMeals;
 }
 
-export async function addProductToMeal(product: AddMealProductForm) {
+export async function addProductToMeal(
+  product: AddMealProductForm
+): Promise<DayMeals> {
   const response = await axios.post(`${apiUrl}/meals/products`, product);
   const newProductListDto = response.data;
   const newProductList: DayMeals =
     convertDayMealDtoToDayMeal(newProductListDto);
 
   return newProductList;
+}
+
+export async function deleteProductFromMeal(
+  productId: string
+): Promise<DayMeals> {
+  const response = await axios.delete(
+    // `${apiUrl}/meals/products/xd`,
+    `${apiUrl}/meals/products/${productId}`,
+    {}
+  );
+  const dayMealsDto: DayMealsDto = response.data;
+  const dayMeals: DayMeals = convertDayMealDtoToDayMeal(dayMealsDto);
+  return dayMeals;
 }
 
 function convertDayMealDtoToDayMeal(dayMealDto: DayMealsDto): DayMeals {

@@ -1,9 +1,9 @@
-import { MealProduct } from "../../slice/mealsSlice";
+import { deleteProduct, MealProduct } from "../../slice/mealsSlice";
 import styles from "./ProductListTable.module.css";
 import LocalDiningOutlinedIcon from "@material-ui/icons/LocalDiningOutlined";
-import DeleteOutlineOutlinedIcon from "@material-ui/icons/DeleteOutlineOutlined";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
+import { useDispatch } from "react-redux";
 
 interface ProductListTableProps {
   date: string;
@@ -14,9 +14,16 @@ interface RowProps {
   name: string;
   totalCalories: number;
   quantity: number;
+  productId: string;
 }
 
 const Row: React.FC<RowProps> = (props) => {
+  const dispatch = useDispatch();
+
+  const deleteProductHandler = () => {
+    dispatch(deleteProduct(props.productId));
+  };
+
   return (
     <tr className={styles.row}>
       <td>{props.name}</td>
@@ -29,7 +36,10 @@ const Row: React.FC<RowProps> = (props) => {
         </IconButton> */}
       </td>
       <td className={styles.deleteButtonDrawer}>
-        <IconButton style={{ width: "10px", height: "10px" }}>
+        <IconButton
+          style={{ width: "10px", height: "10px" }}
+          onClick={deleteProductHandler}
+        >
           <DeleteIcon style={{ fontSize: "20px" }} />
         </IconButton>
       </td>
@@ -65,6 +75,7 @@ const ProductListTable: React.FC<ProductListTableProps> = (props) => {
                 name={product.name}
                 totalCalories={product.kcal}
                 quantity={product.weightInGrams}
+                productId={product.id}
                 key={product.id}
               />
             ))}
