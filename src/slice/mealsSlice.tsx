@@ -77,32 +77,16 @@ export const mealsSlice = createSlice({
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMeals.fulfilled, (state, action) => {
-      const meals = action.payload;
-      state.date = meals.date;
-      state.breakfast = meals.breakfast;
-      state.dinner = meals.dinner;
-      state.lunch = meals.lunch;
-      state.snacks = meals.snacks;
-      state.supper = meals.supper;
-    });
-    builder.addCase(addProduct.fulfilled, (state, action) => {
-      const meals = action.payload;
-      state.date = meals.date;
-      state.breakfast = meals.breakfast;
-      state.dinner = meals.dinner;
-      state.lunch = meals.lunch;
-      state.snacks = meals.snacks;
-      state.supper = meals.supper;
-    });
-    builder.addCase(deleteProduct.fulfilled, (state, action) => {
-      const meals = action.payload;
-      state.date = meals.date;
-      state.breakfast = meals.breakfast;
-      state.dinner = meals.dinner;
-      state.lunch = meals.lunch;
-      state.snacks = meals.snacks;
-      state.supper = meals.supper;
+    [fetchMeals, addProduct, deleteProduct].forEach((element) => {
+      builder.addCase(element.fulfilled, (state, action) => {
+        const meals = action.payload;
+        state.date = meals.date;
+        state.breakfast = meals.breakfast;
+        state.dinner = meals.dinner;
+        state.lunch = meals.lunch;
+        state.snacks = meals.snacks;
+        state.supper = meals.supper;
+      });
     });
   },
 });

@@ -46,7 +46,6 @@ export async function deleteProductFromMeal(
   productId: string
 ): Promise<DayMeals> {
   const response = await axios.delete(
-    // `${apiUrl}/meals/products/xd`,
     `${apiUrl}/meals/products/${productId}`,
     {}
   );
