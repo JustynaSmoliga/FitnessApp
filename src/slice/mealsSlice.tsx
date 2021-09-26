@@ -1,6 +1,11 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import moment from "moment";
-import { getMeals } from "../client/mealsClient";
+import {
+  addProductToMeal,
+  deleteProductFromMeal,
+  getMeals,
+} from "../client/mealsClient";
+import { AddMealProductForm } from "../features/add-meal-product/AddMealProduct";
 
 export interface MealsState extends DayMeals {}
 
@@ -51,19 +56,37 @@ export const fetchMeals = createAsyncThunk(
   }
 );
 
+export const addProduct = createAsyncThunk(
+  "meals/addProduct",
+  async (product: AddMealProductForm) => {
+    const response = await addProductToMeal(product);
+    return response;
+  }
+);
+
+export const deleteProduct = createAsyncThunk(
+  "meals/deleteProduct",
+  async (productId: string) => {
+    const response = await deleteProductFromMeal(productId);
+    return response;
+  }
+);
+
 export const mealsSlice = createSlice({
   name: "meals",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMeals.fulfilled, (state, action) => {
-      const meals = action.payload;
-      state.date = meals.date;
-      state.breakfast = meals.breakfast;
-      state.dinner = meals.dinner;
-      state.lunch = meals.lunch;
-      state.snacks = meals.snacks;
-      state.supper = meals.supper;
+    [fetchMeals, addProduct, deleteProduct].forEach((element) => {
+      builder.addCase(element.fulfilled, (state, action) => {
+        const meals = action.payload;
+        state.date = meals.date;
+        state.breakfast = meals.breakfast;
+        state.dinner = meals.dinner;
+        state.lunch = meals.lunch;
+        state.snacks = meals.snacks;
+        state.supper = meals.supper;
+      });
     });
   },
 });

@@ -8,10 +8,19 @@ import {
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import { getProducts, Product } from "../../client/productClient";
+import { addProduct } from "../../slice/mealsSlice";
+
+export interface AddMealProductForm {
+  productId: string;
+  mealId: string;
+  weightInGrams: number;
+}
 
 interface AddMealProductProps {
   showAddMealProduct: React.Dispatch<React.SetStateAction<boolean>>;
+  mealId: string;
 }
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -21,11 +30,20 @@ const useStyles = makeStyles((theme: Theme) =>
         marginBottom: "5%",
       },
     },
-    form: {
-      width: "170px",
-      marginLeft: "1%",
+    formContainer: {
+      display: "flex",
+      flexDirection: "column",
+      width: "300px",
       marginRight: "3%",
-      paddingTop: "2%",
+    },
+    inputAlignment: {
+      width: "100%",
+    },
+    addProductParagraph: {
+      marginTop: "0",
+      marginBottom: "0",
+      textAlign: "left",
+      color: theme.palette.secondary.dark,
     },
   })
 );
@@ -34,10 +52,13 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const classes = useStyles();
 
   const [productsList, setProductsList] = useState<Product[]>([]);
-  const [productName, setproductName] = useState<string | null>("");
-  const [productQuantityInGrams, setproductQuantityInGrams] = useState(0);
+  const [productName, setProductName] = useState<string | null>("");
+  const [productQuantityInGrams, setProductQuantityInGrams] = useState(0);
   const [productCalories, setProductCalories] = useState(0);
   const [productWeightInGrams, setProductWeightInGrams] = useState(0);
+  const [productId, setProductId] = useState("");
+
+  const dispatch = useDispatch();
 
   const changeTextFieldHandler = async (
     event: React.ChangeEvent<HTMLInputElement>
@@ -55,22 +76,24 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const selectOptionHandler = (event: any, newValue: string | null) => {
     if (newValue === null) {
       setProductWeightInGrams(0);
-      setproductQuantityInGrams(0);
+      setProductQuantityInGrams(0);
       setProductCalories(0);
       return;
     }
-    setproductName(newValue);
+    setProductName(newValue);
     const productIndex = productsList.findIndex(
       (product) => product.name === newValue
     );
 
     const selectedProductQuantityInGrams =
-      productsList[productIndex].caloriesInGrams;
-    const selectedProductCalories = productsList[productIndex].totalCalories;
+      productsList[productIndex].weightInGrams;
+    const selectedProductCalories = productsList[productIndex].kcal;
+    const selectedProductId = productsList[productIndex].id;
 
     setProductWeightInGrams(100);
-    setproductQuantityInGrams(selectedProductQuantityInGrams);
+    setProductQuantityInGrams(selectedProductQuantityInGrams);
     setProductCalories(selectedProductCalories);
+    setProductId(selectedProductId);
   };
 
   const changeQuantityOfProductHandler = (
@@ -97,7 +120,13 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   const submitHandler = (event: React.FormEvent) => {
     event.preventDefault();
 
-    //TODO
+    const product: AddMealProductForm = {
+      mealId: props.mealId,
+      productId: productId,
+      weightInGrams: productWeightInGrams,
+    };
+
+    dispatch(addProduct(product));
 
     props.showAddMealProduct(false);
   };
@@ -107,8 +136,9 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
   };
 
   return (
-    <Box className={classes.form}>
+    <Box className={classes.formContainer}>
       <form onSubmit={submitHandler} className={classes.root}>
+        <p className={classes.addProductParagraph}>ADD NEW PRODUCT:</p>
         <Autocomplete
           value={productName}
           onChange={selectOptionHandler}
@@ -130,22 +160,23 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
           )}
         />
         <TextField
-          label="Calories in product portion: "
+          label="Calories in product portion"
           variant="outlined"
           value={`${productCalories} kcal / ${productQuantityInGrams} g`}
           InputProps={{
             readOnly: true,
           }}
+          className={classes.inputAlignment}
         />
-        <Box display="flex">
+        <Box display="flex" width="100%">
           <TextField
             type="number"
-            label="Weight in grams:"
+            label="Weight[g]"
             variant="outlined"
             onChange={changeQuantityOfProductHandler}
             value={productWeightInGrams}
           />
-          <Box width="30px"></Box>
+          <Box width="10%"></Box>
           <TextField
             value={calculateTotalCalories(
               productCalories,
@@ -156,7 +187,7 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
               readOnly: true,
             }}
             variant="outlined"
-            label="Total calories: "
+            label="Calories"
           />
         </Box>
         <Box
@@ -174,7 +205,12 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
             Cancel
           </Button>
           <Box width="5%"></Box>
-          <Button variant="contained" color="secondary" type="submit">
+          <Button
+            variant="contained"
+            color="secondary"
+            type="submit"
+            disabled={!productCalories}
+          >
             Save
           </Button>
         </Box>

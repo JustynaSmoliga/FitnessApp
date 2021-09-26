@@ -20,32 +20,17 @@ const Meals = () => {
   }, [dateIsoFormat, dispatch]);
 
   return (
-    <Box display="flex" flexDirection="row" flexWrap="wrap">
-      <Meal
-        title="BREAKFAST"
-        productsEaten={meals.breakfast.mealProducts}
-        date={meals.date}
-      />
-      <Meal
-        title="DINNER"
-        productsEaten={meals.dinner.mealProducts}
-        date={meals.date}
-      />
-      <Meal
-        title="LUNCH"
-        productsEaten={meals.lunch.mealProducts}
-        date={meals.date}
-      />
-      <Meal
-        title="SUPPER"
-        productsEaten={meals.supper.mealProducts}
-        date={meals.date}
-      />
-      <Meal
-        title="SNACKS"
-        productsEaten={meals.snacks.mealProducts}
-        date={meals.date}
-      />
+    <Box
+      display="flex"
+      flexDirection="row"
+      flexWrap="wrap"
+      justifyContent="center"
+    >
+      <Meal title="BREAKFAST" date={meals.date} meal={meals.breakfast} />
+      <Meal title="DINNER" date={meals.date} meal={meals.dinner} />
+      <Meal title="LUNCH" date={meals.date} meal={meals.lunch} />
+      <Meal title="SUPPER" meal={meals.supper} date={meals.date} />
+      <Meal title="SNACKS" date={meals.date} meal={meals.snacks} />
     </Box>
   );
 };
