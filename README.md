@@ -45,20 +45,21 @@ To learn React, check out the [React documentation](https://reactjs.org/). -->
 
 # FitnessApp
 
-This is Fitness App to monitor meals calories and physical exercises. In this respository you can find frontend part of application.
+Application to monitor calories eaten and physical activity. In this respository you can find frontend part of application.
 
 # Features
 
-**Menu** - Menu enable navigation to tabs like: Overview, My Diary, My goals, My weights, Log out.
-**My Diary** - Each user has access to the own history of eaten products, exercises and weights. You can change date by date picker.
-**Meals** - In this part you can manage yours eaten products and attach them to appropriate meals: breakfast, dinner, lunch, supper and snacks.
+**Menu** - Menu enables navigation between tabs like: Overview, My Diary, My goals, My weights, Log out.
 
-- Add product to meal - to add product to meal you must click button 'ADD PRODUCT' and start write name of searched product. Search engine will start searching when you refill 3 characters. If product is in our database you will see product prompts. When you chosen product you will see calories in product portion. You can change weight of product and calories will be recalculated. When you will click 'SAVE' button, product will be added to the meal.
+**Meals** - To access this feature you will have to go to My Dairy > Meals in the menu. You can:
 
-Note: now our database isn't completely supplemented with products. If you want check this feature search products by these names: 'egg', 'carrot'.
+- See history of eaten products - there is separate table for each meal (breakfast, dinner, lunch, supper and snacks). To change date you can use datepicker which is located at the top of the page.
 
-- Eaten products table - you can see added products in table.
-- Delete product from meal - you can delete product from meal. To done this you must click dumpster icon button and confirm that you really want delete this product from meal.
+- Add product to meal - to add product to meal you must click button 'ADD PRODUCT' and start writing name of desired product. Search engine will start searching when you will type 3 characters. If product is in database you will see prompts. When you will choose product you will see calories in product portion. You can change weight of product and calories will be recalculated. When you will click 'SAVE' button, product will be added to the meal.
+
+Note: now database isn't completely filled with products. If you want check this feature search products by these names: 'egg', 'carrot'.
+
+- Delete product from meal - you can delete product from meal. To do this you must click dumpster icon and confirm that you want delete this product from meal.
 
 # Used technologies
 
