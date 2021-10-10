@@ -4,7 +4,7 @@ import { MealType } from "../slice/mealsSlice";
 import apiUrl from "../app/api";
 import { AddMealProductForm } from "../features/add-meal-product/AddMealProduct";
 
-interface DayMealsDto {
+export interface DayMealsDto {
   id: string;
   date: string;
   meals: { [prop in MealType]: MealDto };

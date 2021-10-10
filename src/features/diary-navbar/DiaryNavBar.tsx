@@ -10,6 +10,7 @@ import PoolOutlinedIcon from "@material-ui/icons/PoolOutlined";
 import EmojiFoodBeverageOutlinedIcon from "@material-ui/icons/EmojiFoodBeverageOutlined";
 import ExposureOutlinedIcon from "@material-ui/icons/ExposureOutlined";
 import Meals from "../meals/Meals";
+import AddWeight from "../add-weight/AddWeight";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -124,7 +125,7 @@ export default function DiaryNavBar() {
           Exercises component
         </TabPanel>
         <TabPanel value={value} index={2} dir={theme.direction}>
-          Weight component
+          <AddWeight />
         </TabPanel>
       </SwipeableViews>
     </div>
