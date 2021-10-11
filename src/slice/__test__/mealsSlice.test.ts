@@ -1,24 +1,18 @@
-// import moment from "moment";
+import {
+  configureStore as configureStoreReduxToolkit,
+  EnhancedStore,
+} from "@reduxjs/toolkit";
 import moment from "moment";
+import { combineReducers } from "redux";
+import * as MealsClient from "../../client/mealsClient";
+import { AddMealProductForm } from "../../features/add-meal-product/AddMealProduct";
 import mealsSliceReducer, {
   DayMeals,
   fetchMeals,
-  MealsState,
+  addProduct,
   MealType,
+  deleteProduct,
 } from "../mealsSlice";
-// import * as MealsSlice from "../mealsSlice";
-import * as MealsClient from "../../client/mealsClient";
-import { applyMiddleware, EnhancedStore } from "@reduxjs/toolkit";
-import configureStore from "redux-mock-store";
-import { Provider } from "react-redux";
-import Meals from "../../features/meals/Meals";
-import { render, screen } from "@testing-library/react";
-import { combineReducers } from "redux";
-import { configureStore as configureStoreReduxToolkit } from "@reduxjs/toolkit";
-import { DayMealsDto } from "../../client/mealsClient";
-// const mockStore = configureStore([]);
-import { RootState } from "../../app/store";
-// const diaryDate = "2021-09-14T22:00:00.000+00:00";
 
 const meals: DayMeals = {
   date: "2021-09-19",
@@ -79,15 +73,59 @@ const initialState = {
 
 describe("meals slice reducer", () => {
   let store: EnhancedStore<any, any>;
+
   beforeEach(() => {
     store = createStore(initialState);
   });
 
-  test("should update meals", async () => {
+  test("should fetch meals", async () => {
     jest.spyOn(MealsClient, "getMeals").mockResolvedValue(meals);
 
     const date = "19-09-2021";
+
     await store.dispatch(fetchMeals(date));
+
+    expect(store.getState().meals).toEqual(meals);
+  });
+
+  test("should add product to meals", async () => {
+    const product: AddMealProductForm = {
+      productId: "c477b6ec-16bc-11ec-9621-0242ac130002",
+      weightInGrams: 1000,
+      mealId: "2c6b9dde-cfc0-4971-b6eb-246deb778fce",
+    };
+
+    const expectedMeals = {
+      ...meals,
+      supper: {
+        ...meals.supper,
+        mealProducts: [
+          ...meals.supper.mealProducts,
+          {
+            id: product.productId,
+            name: "egg",
+            kcal: 400,
+            weightInGrams: product.weightInGrams,
+          },
+        ],
+      },
+    };
+
+    jest
+      .spyOn(MealsClient, "addProductToMeal")
+      .mockResolvedValue(expectedMeals);
+
+    await store.dispatch(addProduct(product));
+
+    expect(store.getState().meals).toEqual(expectedMeals);
+  });
+
+  test("should delete product from meal", async () => {
+    const productId = "c477b6ec-16bc-11ec-9621-0242ac130002";
+
+    jest.spyOn(MealsClient, "deleteProductFromMeal").mockResolvedValue(meals);
+
+    await store.dispatch(deleteProduct(productId));
 
     expect(store.getState().meals).toEqual(meals);
   });
