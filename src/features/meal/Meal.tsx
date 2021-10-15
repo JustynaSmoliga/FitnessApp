@@ -5,10 +5,9 @@ import ProductsListTable from "../products-list-table/ProductsListTable";
 import AddMealProduct from "../add-meal-product/AddMealProduct";
 import { Meal } from "../../slice/mealsSlice";
 
-interface MealProps {
+export interface MealProps {
   title: string;
   meal: Meal;
-  date: string;
 }
 
 const MealComponent: React.FC<MealProps> = (props) => {
@@ -28,10 +27,7 @@ const MealComponent: React.FC<MealProps> = (props) => {
       <Paper elevation={3} square>
         <p className={styles.title}>{props.title}</p>
         <Box display="flex" minWidth="550px" justifyContent="center">
-          <ProductsListTable
-            productsEaten={props.meal.mealProducts}
-            date={props.date}
-          />
+          <ProductsListTable productsEaten={props.meal.mealProducts} />
           {addMealProductVisible && (
             <AddMealProduct
               showAddMealProduct={setAddMealProductVisible}

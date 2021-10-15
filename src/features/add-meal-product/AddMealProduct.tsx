@@ -137,7 +137,11 @@ const AddMealProduct: React.FC<AddMealProductProps> = (props) => {
 
   return (
     <Box className={classes.formContainer}>
-      <form onSubmit={submitHandler} className={classes.root}>
+      <form
+        onSubmit={submitHandler}
+        className={classes.root}
+        aria-label={"form"}
+      >
         <p className={classes.addProductParagraph}>ADD NEW PRODUCT:</p>
         <Autocomplete
           value={productName}
