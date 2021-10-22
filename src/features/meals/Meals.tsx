@@ -26,11 +26,11 @@ const Meals = () => {
       flexWrap="wrap"
       justifyContent="center"
     >
-      <Meal title="BREAKFAST" date={meals.date} meal={meals.breakfast} />
-      <Meal title="DINNER" date={meals.date} meal={meals.dinner} />
-      <Meal title="LUNCH" date={meals.date} meal={meals.lunch} />
-      <Meal title="SUPPER" meal={meals.supper} date={meals.date} />
-      <Meal title="SNACKS" date={meals.date} meal={meals.snacks} />
+      <Meal title="BREAKFAST" meal={meals.breakfast} />
+      <Meal title="DINNER" meal={meals.dinner} />
+      <Meal title="LUNCH" meal={meals.lunch} />
+      <Meal title="SUPPER" meal={meals.supper} />
+      <Meal title="SNACKS" meal={meals.snacks} />
     </Box>
   );
 };

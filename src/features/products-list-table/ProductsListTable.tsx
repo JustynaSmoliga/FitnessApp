@@ -8,7 +8,6 @@ import { useState } from "react";
 import ModalWindow from "../modal-window/modalWindow";
 
 interface ProductListTableProps {
-  date: string;
   productsEaten: MealProduct[];
 }
 
@@ -45,6 +44,7 @@ const Row: React.FC<RowProps> = (props) => {
           <IconButton
             style={{ width: "10px", height: "10px" }}
             onClick={deleteIconClickHandler}
+            aria-label={"deleteButton"}
           >
             <DeleteIcon style={{ fontSize: "20px" }} />
           </IconButton>
