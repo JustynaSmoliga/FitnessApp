@@ -2,13 +2,15 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
 import "./App.css";
 import Diary from "./features/diary/Diary";
+import Registration from "./features/registration/Registration";
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/registration">
-          <p>Registration</p>
+          {/* <p>Registration</p> */}
+          <Registration />
         </Route>
         <Route path="/login">
           <p>Login</p>
