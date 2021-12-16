@@ -3,14 +3,17 @@ import PrivateRoute from "./features/private-route/PrivateRoute";
 import "./App.css";
 import Diary from "./features/diary/Diary";
 import Registration from "./features/registration/Registration";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/registration">
-          {/* <p>Registration</p> */}
-          <Registration />
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Registration />
+          </MuiPickersUtilsProvider>
         </Route>
         <Route path="/login">
           <p>Login</p>

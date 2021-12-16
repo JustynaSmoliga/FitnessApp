@@ -1,10 +1,10 @@
-import { createMuiTheme } from "@material-ui/core/styles";
+import { createTheme } from "@material-ui/core/styles";
 
-export const mainTheme = createMuiTheme({
+export const mainTheme = createTheme({
   palette: {
     primary: {
       main: "#ffffff",
-      dark:"#f5f5f5"
+      dark: "#f5f5f5",
     },
     secondary: {
       main: "#1976d2",

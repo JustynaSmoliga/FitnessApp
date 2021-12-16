@@ -13,6 +13,7 @@ import {
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
+import { DatePicker } from "@material-ui/pickers";
 
 enum Gender {
   MALE = "male",
@@ -36,9 +37,34 @@ const validationSchema = yup.object({
     .number()
     .min(1, "Weight should be positive number")
     .required("Weight is required"),
+  password: yup
+    .string()
+    .min(8, "Password should be of minimum 8 characters length")
+    .required("Password is required")
+    .matches(
+      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+    ),
+  passwordConfirmation: yup
+    .string()
+    .required("You must repeat password")
+    .oneOf([yup.ref("password"), null], "Passwords must match"),
+  birthDate: yup.date().nullable(),
 });
 
+// const useStyles = makeStyles((theme: Theme) =>
+//   createStyles({
+// MuiPickersToolbar-toolbar"
+//     root: {
+//       "&.MuiPickersToolbar-toolbar": {
+//         backgroundColor: theme.palette.secondary.dark,
+//       },
+//     },
+//   })
+// );
+
 const Registration = () => {
+  // const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       name: "Justyna",
@@ -46,6 +72,9 @@ const Registration = () => {
       height: 160,
       weight: 50,
       gender: Gender.FEMALE,
+      password: "",
+      passwordConfirmation: "",
+      birthDate: "",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -95,7 +124,52 @@ const Registration = () => {
           error={formik.touched.weight && Boolean(formik.errors.weight)}
           helperText={formik.touched.weight && formik.errors.weight}
         />
-
+        <TextField
+          type="password"
+          name="password"
+          id="password"
+          label="Password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={formik.touched.password && formik.errors.password}
+        />
+        <TextField
+          type="password"
+          name="passwordConfirmation"
+          id="passwpasswordConfirmationord"
+          label="Repeat password"
+          value={formik.values.passwordConfirmation}
+          onChange={formik.handleChange}
+          error={
+            formik.touched.passwordConfirmation &&
+            Boolean(formik.errors.passwordConfirmation)
+          }
+          helperText={
+            formik.touched.passwordConfirmation &&
+            formik.errors.passwordConfirmation
+          }
+        />
+        <DatePicker
+          name="birthDate"
+          clearable
+          value={formik.values.birthDate}
+          openTo="year"
+          format="dd/MM/yyyy"
+          disableFuture
+          // placeholder="10/10/2018"
+          // views={["year", "month", "date"]}
+          onChange={(date) => formik.setFieldValue("birthDate", date)}
+          // minDate={new Date()}
+          label="Date of birth"
+        />
+        {/* <TextField
+          type="date"
+          id="birthDate"
+          name="birthDate"
+          value={formik.values.birthDate}
+          onChange={(date) => formik.setFieldValue("birthDate", date)}
+        ></TextField> */}
         <FormControl component="fieldset">
           <RadioGroup
             row
@@ -132,9 +206,10 @@ export default Registration;
 //email
 //wzrost
 //waga
-//cel (czy chce schudnac, przytyc, utrzymac wage)
 //plec
+//haslo
+
+//cel (czy chce schudnac, przytyc, utrzymac wage
 //data urodzenia
 //waga docelowa
 //poziom aktywnosci fizycznej
-//haslo
