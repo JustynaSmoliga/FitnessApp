@@ -5,6 +5,8 @@ import Diary from "./features/diary/Diary";
 import Registration from "./features/registration/Registration";
 import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 import MomentUtils from "@date-io/moment";
+import { Box } from "@material-ui/core";
+import Select from "./features/select/Select";
 
 function App() {
   return (
@@ -12,11 +14,20 @@ function App() {
       <Switch>
         <Route path="/registration">
           <MuiPickersUtilsProvider utils={MomentUtils}>
-            <Registration />
+            <Box
+              width="100%"
+              height="100vh"
+              display="flex"
+              className="background"
+              justifyContent="center"
+              // paddingLeft="20%"
+            >
+              <Registration />
+            </Box>
           </MuiPickersUtilsProvider>
         </Route>
         <Route path="/login">
-          <p>Login</p>
+          <Select />
         </Route>
         <PrivateRoute path="/overview">
           <p>Overview</p>

@@ -7,6 +7,12 @@
   pointer-events: none;
 }
 
+.background {
+  background-image: url("static/food.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-float infinite 3s ease-in-out;
