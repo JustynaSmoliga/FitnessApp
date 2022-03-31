@@ -290,7 +290,7 @@ const Registration = () => {
               selectName="weightGoal"
               blurHandler={formik.handleBlur}
               changeHandler={formik.handleChange}
-              initialValue={formik.values.weightGoal}
+              value={formik.values.weightGoal}
             ></SelectFormik>
 
             <SelectFormik
@@ -299,40 +299,8 @@ const Registration = () => {
               selectName="activityLevelOptions"
               blurHandler={formik.handleBlur}
               changeHandler={formik.handleChange}
-              initialValue={formik.values.activityLevelOptions}
+              value={formik.values.activityLevelOptions}
             ></SelectFormik>
-
-            {/* DRUGA WERSJA - z formikiem, ale wszystko w 1 pliku  
-              
-              
-              <div>
-                <TextField
-                  id="weightGoal"
-                  select
-                  // label={props.label}
-                  value={formik.values.weightGoal}
-                  onChange={formik.handleChange}
-                  name="weightGoal"
-                  onBlur={formik.handleBlur}
-                  // helperText="Please select your currency"
-                >
-                  {weightOptions.map((option) => (
-                    <MenuItem key={option.value} value={option.value}>
-                      {option.label}
-                    </MenuItem>
-                  ))}
-                </TextField>
-              </div>
-            </Box> */}
-
-            {/* PIERWSZA WERSJA - bez formika
-            
-            
-            <Select options={weightOptions} label="Choose your weight goal" /> */}
-            {/* <Select
-              options={activityLevelOptions}
-              label="Choose your activity level"
-            /> */}
           </Box>
 
           <Button color="secondary" variant="contained" type="submit">
@@ -345,15 +313,3 @@ const Registration = () => {
 };
 
 export default Registration;
-
-//name
-//email
-//wzrost
-//waga
-//waga docelowa
-//plec
-//haslo
-//data urodzenia
-
-//cel (czy chce schudnac, przytyc, utrzymac wage
-//poziom aktywnosci fizycznej

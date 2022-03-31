@@ -12,9 +12,9 @@ interface SelectFormikProps {
   options: SelectItemProps[];
   label: string;
   selectName: string;
-  changeHandler: any;
-  blurHandler: any;
-  initialValue: string;
+  changeHandler: (event: React.ChangeEvent<any>) => void;
+  blurHandler: (event: React.FocusEvent<any>) => void;
+  value: string;
 }
 
 const SelectFormik: React.FC<SelectFormikProps> = (props) => {
@@ -31,7 +31,7 @@ const SelectFormik: React.FC<SelectFormikProps> = (props) => {
             id={props.selectName}
             name={props.selectName}
             label={props.label}
-            value={props.initialValue}
+            value={props.value}
             onChange={props.changeHandler}
             onBlur={props.blurHandler}
           >
