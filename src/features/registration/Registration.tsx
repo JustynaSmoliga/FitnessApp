@@ -30,6 +30,40 @@ enum Gender {
   FEMALE = "female",
 }
 
+const weightOptions = [
+  {
+    value: "1",
+    label: "Lose weight",
+  },
+  {
+    value: "2",
+    label: "Gain weight",
+  },
+  {
+    value: "3",
+    label: "Keep weight",
+  },
+];
+
+const activityLevelOptions = [
+  {
+    value: "1",
+    label: "Spend most of the day sitting",
+  },
+  {
+    value: "2",
+    label: "Spend significant part of the day on your feet",
+  },
+  {
+    value: "3",
+    label: "Spend significant part of the day doing physical activities",
+  },
+  {
+    value: "4",
+    label: "Spend most of the day doing heavy physical activities",
+  },
+];
+
 const validationSchema = yup.object({
   name: yup
     .string()
@@ -83,6 +117,8 @@ const useStyles = makeStyles((theme: Theme) =>
       fontSize: "2em",
       textTransform: "uppercase",
       letterSpacing: "2px",
+      padding: "0",
+      margin: "0",
     },
     select: {
       color: "#ff0000",
@@ -91,17 +127,18 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Registration = () => {
-  const [age, setAge] = useState("10");
+  // const [age, setAge] = useState("10");
 
-  const handleChange = (event: any) => {
-    setAge(event.target.value as string);
-  };
+  // const handleChange = (event: any) => {
+  //   setAge(event.target.value as string);
+  // };
+
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       name: "Justyna",
       email: "justyna3@gmail.com",
-      height: "",
+      height: "50",
       weight: 50,
       targetWeight: 50,
       gender: Gender.FEMALE,
@@ -124,9 +161,8 @@ const Registration = () => {
     >
       <form onSubmit={formik.handleSubmit} className={classes.root}>
         <Box display="flex" flexDirection="column">
-          <p className={classes.paragraph}>
-            Achieve your success with us.<br></br> Register just now!
-          </p>
+          <p className={classes.paragraph}>Achieve your success with us.</p>
+          <p className={classes.paragraph}>Register just now!</p>
           <TextField
             name="name"
             id="name"
@@ -159,7 +195,7 @@ const Registration = () => {
           <TextField
             type="password"
             name="passwordConfirmation"
-            id="passwpasswordConfirmationord"
+            id="passwpasswordConfirmation"
             label="Repeat password"
             value={formik.values.passwordConfirmation}
             onChange={formik.handleChange}
@@ -183,7 +219,6 @@ const Registration = () => {
               error={formik.touched.height && Boolean(formik.errors.height)}
               helperText={formik.touched.height && formik.errors.height}
             />
-            {/* <Box width="4%"></Box> */}
             <TextField
               type="number"
               name="weight"
@@ -243,26 +278,13 @@ const Registration = () => {
               />
             </RadioGroup>
           </FormControl>
-
-          {/* <Box>
-            <FormControl fullWidth>
-              <InputLabel id="goal-label">Choose your goal:</InputLabel>
-              <Select
-                labelId="goal-label"
-                id="goal"
-                value={age}
-                label="Choose your goal"
-                onChange={handleChange}
-                className={classes.select}
-              >
-                <MenuItem value={10}>Lose weight</MenuItem>
-                <MenuItem value={20}>Gain weight</MenuItem>
-                <MenuItem value={30}>Keep weight</MenuItem>
-              </Select>
-            </FormControl>
-          </Box> */}
-
-          <Select />
+          <Box display="flex">
+            <Select options={weightOptions} label="Choose your weight goal" />
+            <Select
+              options={activityLevelOptions}
+              label="Choose your activity level"
+            />
+          </Box>
 
           <Button color="secondary" variant="contained" fullWidth type="submit">
             Register

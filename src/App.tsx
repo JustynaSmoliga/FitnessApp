@@ -27,7 +27,7 @@ function App() {
           </MuiPickersUtilsProvider>
         </Route>
         <Route path="/login">
-          <Select />
+          <p>login</p>
         </Route>
         <PrivateRoute path="/overview">
           <p>Overview</p>

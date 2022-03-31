@@ -4,47 +4,42 @@ import TextField from "@mui/material/TextField";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 
-const weightOptions = [
-  {
-    value: "1",
-    label: "Lose weight",
-  },
-  {
-    value: "2",
-    label: "Gain weight",
-  },
-  {
-    value: "3",
-    label: "Keep weight",
-  },
-];
+interface SelectPropsItem {
+  value: string;
+  label: string;
+}
 
-const Select = () => {
-  const [weight, setWeight] = useState("1");
+interface SelectProps {
+  options: SelectPropsItem[];
+  label: string;
+}
+
+const Select: React.FC<SelectProps> = (props) => {
+  const [selectedOption, setSelectedOption] = useState("1");
 
   const handleChange = (event: any) => {
-    setWeight(event.target.value);
+    setSelectedOption(event.target.value);
   };
 
   return (
     <Box
-      component="form"
+      // component="form"
       sx={{
-        "& .MuiTextField-root": { m: 1, width: "25ch" },
+        "& .MuiTextField-root": { minWidth: "25ch" },
       }}
-      noValidate
-      autoComplete="off"
+      // noValidate
+      // autoComplete="off"
     >
       <div>
         <TextField
           id="outlined-select-currency"
           select
-          label="Choose your weight goal"
-          value={weight}
+          label={props.label}
+          value={selectedOption}
           onChange={handleChange}
-          // helperText="Please select your currency
+          // helperText="Please select your currency"
         >
-          {weightOptions.map((option) => (
+          {props.options.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
