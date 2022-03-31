@@ -98,6 +98,7 @@ const validationSchema = yup.object({
     .required("You must repeat password")
     .oneOf([yup.ref("password"), null], "Passwords must match"),
   birthDate: yup.date().nullable(),
+  weightGoal: yup.string(),
 });
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -145,6 +146,7 @@ const Registration = () => {
       password: "",
       passwordConfirmation: "",
       birthDate: moment(new Date()),
+      weightGoal: "1",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -279,11 +281,38 @@ const Registration = () => {
             </RadioGroup>
           </FormControl>
           <Box display="flex">
-            <Select options={weightOptions} label="Choose your weight goal" />
-            <Select
+            <Box
+            // sx={{
+            //   "& .MuiTextField-root": { minWidth: "25ch" },
+            // }}
+            // noValidate
+            // autoComplete="off"
+            >
+              <div>
+                <TextField
+                  id="weightGoal"
+                  select
+                  // label={props.label}
+                  value={formik.values.weightGoal}
+                  onChange={formik.handleChange}
+                  name="weightGoal"
+                  onBlur={formik.handleBlur}
+                  // helperText="Please select your currency"
+                >
+                  {weightOptions.map((option) => (
+                    <MenuItem key={option.value} value={option.value}>
+                      {option.label}
+                    </MenuItem>
+                  ))}
+                </TextField>
+              </div>
+            </Box>
+
+            {/* <Select options={weightOptions} label="Choose your weight goal" /> */}
+            {/* <Select
               options={activityLevelOptions}
               label="Choose your activity level"
-            />
+            /> */}
           </Box>
 
           <Button color="secondary" variant="contained" fullWidth type="submit">
