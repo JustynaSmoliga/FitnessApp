@@ -24,6 +24,7 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import { useState } from "react";
 import Select from "../select/Select";
+import SelectFormik from "../selectFormik/SelectFormik";
 
 enum Gender {
   MALE = "male",
@@ -87,11 +88,10 @@ const validationSchema = yup.object({
     .required("Target weight is required"),
   password: yup
     .string()
-    .min(8, "Password should be of minimum 8 characters length")
     .required("Password is required")
     .matches(
-      /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-      "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+      "Password must contain minimum 8 characters, uppercase and lowercase letters, one number and one special case character"
     ),
   passwordConfirmation: yup
     .string()
@@ -99,6 +99,7 @@ const validationSchema = yup.object({
     .oneOf([yup.ref("password"), null], "Passwords must match"),
   birthDate: yup.date().nullable(),
   weightGoal: yup.string(),
+  activityLevelOptions: yup.string(),
 });
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -147,6 +148,7 @@ const Registration = () => {
       passwordConfirmation: "",
       birthDate: moment(new Date()),
       weightGoal: "1",
+      activityLevelOptions: "1",
     },
     validationSchema: validationSchema,
     onSubmit: (values) => {
@@ -280,14 +282,29 @@ const Registration = () => {
               />
             </RadioGroup>
           </FormControl>
+
           <Box display="flex">
-            <Box
-            // sx={{
-            //   "& .MuiTextField-root": { minWidth: "25ch" },
-            // }}
-            // noValidate
-            // autoComplete="off"
-            >
+            <SelectFormik
+              options={weightOptions}
+              label="Choose your weight goal"
+              selectName="weightGoal"
+              blurHandler={formik.handleBlur}
+              changeHandler={formik.handleChange}
+              initialValue={formik.values.weightGoal}
+            ></SelectFormik>
+
+            <SelectFormik
+              options={activityLevelOptions}
+              label="Choose your activity level"
+              selectName="activityLevelOptions"
+              blurHandler={formik.handleBlur}
+              changeHandler={formik.handleChange}
+              initialValue={formik.values.activityLevelOptions}
+            ></SelectFormik>
+
+            {/* DRUGA WERSJA - z formikiem, ale wszystko w 1 pliku  
+              
+              
               <div>
                 <TextField
                   id="weightGoal"
@@ -306,16 +323,19 @@ const Registration = () => {
                   ))}
                 </TextField>
               </div>
-            </Box>
+            </Box> */}
 
-            {/* <Select options={weightOptions} label="Choose your weight goal" /> */}
+            {/* PIERWSZA WERSJA - bez formika
+            
+            
+            <Select options={weightOptions} label="Choose your weight goal" /> */}
             {/* <Select
               options={activityLevelOptions}
               label="Choose your activity level"
             /> */}
           </Box>
 
-          <Button color="secondary" variant="contained" fullWidth type="submit">
+          <Button color="secondary" variant="contained" type="submit">
             Register
           </Button>
         </Box>
