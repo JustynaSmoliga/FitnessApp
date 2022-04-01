@@ -23,12 +23,12 @@ const Select: React.FC<SelectProps> = (props) => {
 
   return (
     <Box
-      // component="form"
-      sx={{
-        "& .MuiTextField-root": { minWidth: "25ch" },
-      }}
-      // noValidate
-      // autoComplete="off"
+    // component="form"
+    // sx={{
+    //   "& .MuiTextField-root": { minWidth: "25ch" },
+    // }}
+    // noValidate
+    // autoComplete="off"
     >
       <div>
         <TextField

@@ -105,9 +105,10 @@ const validationSchema = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
+      // width: "50vw",
       "& .MuiTextField-root": {
-        marginTop: "0.8em",
-        backgroundColor: "white",
+        marginTop: "0.7rem",
+        // backgroundColor: "blue",
       },
       "& .MuiOutlinedInput-root": {
         backgroundColor: "white",
@@ -122,9 +123,32 @@ const useStyles = makeStyles((theme: Theme) =>
       padding: "0",
       margin: "0",
     },
-    select: {
-      color: "#ff0000",
+    div1: {
+      width: "40%",
+
+      "& .MuiTextField-root": {
+        width: "100%",
+      },
     },
+    div2: {
+      width: "58%",
+
+      "& .MuiTextField-root": {
+        width: "100%",
+      },
+    },
+    span: {
+      width: "0.8rem",
+      display: "block",
+    },
+    // spanAlignment: {
+    //   width: "2.5%",
+    //   display: "block",
+    //   backgroundColor: "red",
+    //   "& .MuiTextField-root": {
+    //     backgroundColor: "red",
+    //   },
+    // },
   })
 );
 
@@ -138,11 +162,11 @@ const Registration = () => {
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
-      name: "Justyna",
-      email: "justyna3@gmail.com",
-      height: "50",
-      weight: 50,
-      targetWeight: 50,
+      name: "",
+      email: "",
+      height: "",
+      weight: "",
+      targetWeight: "",
       gender: Gender.FEMALE,
       password: "",
       passwordConfirmation: "",
@@ -162,6 +186,7 @@ const Registration = () => {
       justifyContent="center"
       alignItems="center"
       marginLeft="20%"
+      width="100%"
     >
       <form onSubmit={formik.handleSubmit} className={classes.root}>
         <Box display="flex" flexDirection="column">
@@ -223,6 +248,8 @@ const Registration = () => {
               error={formik.touched.height && Boolean(formik.errors.height)}
               helperText={formik.touched.height && formik.errors.height}
             />
+            <span className={classes.span}></span>
+
             <TextField
               type="number"
               name="weight"
@@ -233,6 +260,8 @@ const Registration = () => {
               error={formik.touched.weight && Boolean(formik.errors.weight)}
               helperText={formik.touched.weight && formik.errors.weight}
             />
+            <span className={classes.span}></span>
+
             <TextField
               type="number"
               name="targetWeight"
@@ -249,16 +278,17 @@ const Registration = () => {
               }
             />
           </Box>
-
-          <LocalizationProvider dateAdapter={DateAdapter}>
-            <DesktopDatePicker
-              label="Date of birth"
-              inputFormat="DD/MM/YYYY"
-              value={formik.values.birthDate}
-              onChange={(date) => formik.setFieldValue("birthDate", date)}
-              renderInput={(params) => <TextField {...params} />}
-            ></DesktopDatePicker>
-          </LocalizationProvider>
+          <Box alignSelf="flex-start">
+            <LocalizationProvider dateAdapter={DateAdapter}>
+              <DesktopDatePicker
+                label="Date of birth"
+                inputFormat="DD/MM/YYYY"
+                value={formik.values.birthDate}
+                onChange={(date) => formik.setFieldValue("birthDate", date)}
+                renderInput={(params) => <TextField {...params} />}
+              ></DesktopDatePicker>
+            </LocalizationProvider>
+          </Box>
 
           <FormControl component="fieldset">
             <RadioGroup
@@ -283,24 +313,29 @@ const Registration = () => {
             </RadioGroup>
           </FormControl>
 
-          <Box display="flex">
-            <SelectFormik
-              options={weightOptions}
-              label="Choose your weight goal"
-              selectName="weightGoal"
-              blurHandler={formik.handleBlur}
-              changeHandler={formik.handleChange}
-              value={formik.values.weightGoal}
-            ></SelectFormik>
-
-            <SelectFormik
-              options={activityLevelOptions}
-              label="Choose your activity level"
-              selectName="activityLevelOptions"
-              blurHandler={formik.handleBlur}
-              changeHandler={formik.handleChange}
-              value={formik.values.activityLevelOptions}
-            ></SelectFormik>
+          <Box display="flex" justifyContent="space-between">
+            <div className={classes.div1}>
+              <SelectFormik
+                options={weightOptions}
+                label="Choose your weight goal"
+                selectFormikName="weightGoal"
+                blurHandler={formik.handleBlur}
+                changeHandler={formik.handleChange}
+                value={formik.values.weightGoal}
+              ></SelectFormik>
+            </div>
+            <span className={classes.span}></span>
+            <div className={classes.div2}>
+              <SelectFormik
+                options={activityLevelOptions}
+                label="Choose your activity level"
+                selectFormikName="activityLevelOptions"
+                blurHandler={formik.handleBlur}
+                changeHandler={formik.handleChange}
+                value={formik.values.activityLevelOptions}
+              ></SelectFormik>
+            </div>
+            {/* <span className={classes.spanAlignment}></span> */}
           </Box>
 
           <Button color="secondary" variant="contained" type="submit">
