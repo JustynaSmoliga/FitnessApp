@@ -253,7 +253,7 @@ const Registration = () => {
           <LocalizationProvider dateAdapter={DateAdapter}>
             <DesktopDatePicker
               label="Date of birth"
-              inputFormat="MM/dd/yyyy"
+              inputFormat="DD/MM/YYYY"
               value={formik.values.birthDate}
               onChange={(date) => formik.setFieldValue("birthDate", date)}
               renderInput={(params) => <TextField {...params} />}
