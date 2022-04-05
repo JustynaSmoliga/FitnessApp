@@ -22,22 +22,13 @@ const Select: React.FC<SelectProps> = (props) => {
   };
 
   return (
-    <Box
-    // component="form"
-    // sx={{
-    //   "& .MuiTextField-root": { minWidth: "25ch" },
-    // }}
-    // noValidate
-    // autoComplete="off"
-    >
+    <Box>
       <div>
         <TextField
-          id="outlined-select-currency"
           select
           label={props.label}
           value={selectedOption}
           onChange={handleChange}
-          // helperText="Please select your currency"
         >
           {props.options.map((option) => (
             <MenuItem key={option.value} value={option.value}>

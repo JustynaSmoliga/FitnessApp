@@ -1,3 +1,8 @@
+:root {
+  --color-orange: #f24141;
+  --color-blue: #1976d2;
+}
+
 .header {
   font-weight: 300;
   font-size: 2em;
@@ -14,7 +19,11 @@
 .header__paragraph2 {
   margin: 0;
   display: inline-block;
-  background-image: linear-gradient(to right, #f24141 15%, #1976d2 85%);
+  background-image: linear-gradient(
+    to right,
+    var(--color-orange) 15%,
+    var(--color-blue) 85%
+  );
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
