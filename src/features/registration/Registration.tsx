@@ -1,29 +1,22 @@
 import { useFormik } from "formik";
 import * as yup from "yup";
+import styles from "./Registration.module.css";
 import {
   Button,
   createStyles,
   makeStyles,
-  // TextField,
   Theme,
   Box,
   FormControl,
-  FormLabel,
   RadioGroup,
   FormControlLabel,
   Radio,
 } from "@material-ui/core";
-// import { DatePicker } from "@material-ui/pickers";
 import DateAdapter from "@mui/lab/AdapterMoment";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import moment from "moment";
-import InputLabel from "@mui/material/InputLabel";
-// import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-import { useState } from "react";
-import Select from "../select/Select";
 import SelectFormik from "../selectFormik/SelectFormik";
 
 enum Gender {
@@ -105,60 +98,42 @@ const validationSchema = yup.object({
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
     root: {
-      // width: "50vw",
-      "& .MuiTextField-root": {
-        marginTop: "0.7rem",
-        // backgroundColor: "blue",
-      },
       "& .MuiOutlinedInput-root": {
         backgroundColor: "white",
       },
     },
-    paragraph: {
-      color: "#ff0000",
-      fontWeight: 300,
-      fontSize: "2em",
-      textTransform: "uppercase",
-      letterSpacing: "2px",
-      padding: "0",
-      margin: "0",
+
+    radioGroup: {
+      gridColumn: "5/8",
+      marginLeft: "1rem",
+
+      "& .MuiFormControl-root": { width: "100%" },
     },
-    div1: {
-      width: "40%",
+
+    datePicker: {
+      gridColumn: "2/5",
+      "& .MuiTextField-root": {
+        width: "100%",
+      },
+    },
+    selectContainer1: {
+      gridColumn: "2/4",
 
       "& .MuiTextField-root": {
         width: "100%",
       },
     },
-    div2: {
-      width: "58%",
+    selectContainer2: {
+      gridColumn: "4/8",
 
       "& .MuiTextField-root": {
         width: "100%",
       },
     },
-    span: {
-      width: "0.8rem",
-      display: "block",
-    },
-    // spanAlignment: {
-    //   width: "2.5%",
-    //   display: "block",
-    //   backgroundColor: "red",
-    //   "& .MuiTextField-root": {
-    //     backgroundColor: "red",
-    //   },
-    // },
   })
 );
 
 const Registration = () => {
-  // const [age, setAge] = useState("10");
-
-  // const handleChange = (event: any) => {
-  //   setAge(event.target.value as string);
-  // };
-
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
@@ -183,18 +158,31 @@ const Registration = () => {
   return (
     <Box
       display="flex"
-      justifyContent="center"
+      justifyContent="flex-end"
       alignItems="center"
-      marginLeft="20%"
+      marginRight="5%"
       width="100%"
     >
       <form onSubmit={formik.handleSubmit} className={classes.root}>
-        <Box display="flex" flexDirection="column">
-          <p className={classes.paragraph}>Achieve your success with us.</p>
-          <p className={classes.paragraph}>Register just now!</p>
+        <Box className={styles.header}>
+          <p className={styles.header__paragraph1}>
+            Achieve your success with us.
+          </p>
+          <p className={styles.header__paragraph2}>Register just now!</p>
+        </Box>
+
+        <Box
+          display="grid"
+          gridTemplateColumns="minmax(6rem,1fr) repeat(6,6rem) minmax(6rem,1fr)"
+          gridTemplateRows="repeat(6, min-content)"
+          justifyContent="center"
+          alignContent="center"
+          gridGap="1rem"
+        >
           <TextField
             name="name"
             id="name"
+            className={styles.alignLeft}
             label="Name"
             value={formik.values.name}
             onChange={formik.handleChange}
@@ -204,6 +192,7 @@ const Registration = () => {
           <TextField
             type="email"
             name="email"
+            className={styles.alignRight}
             id="email"
             label="Email"
             value={formik.values.email}
@@ -215,6 +204,7 @@ const Registration = () => {
             type="password"
             name="password"
             id="password"
+            className={styles.alignLeft}
             label="Password"
             value={formik.values.password}
             onChange={formik.handleChange}
@@ -224,7 +214,8 @@ const Registration = () => {
           <TextField
             type="password"
             name="passwordConfirmation"
-            id="passwpasswordConfirmation"
+            id="passwordConfirmation"
+            className={styles.alignRight}
             label="Repeat password"
             value={formik.values.passwordConfirmation}
             onChange={formik.handleChange}
@@ -237,48 +228,8 @@ const Registration = () => {
               formik.errors.passwordConfirmation
             }
           />
-          <Box display="flex" flexDirection="row">
-            <TextField
-              type="number"
-              name="height"
-              id="height"
-              label="Height"
-              value={formik.values.height}
-              onChange={formik.handleChange}
-              error={formik.touched.height && Boolean(formik.errors.height)}
-              helperText={formik.touched.height && formik.errors.height}
-            />
-            <span className={classes.span}></span>
 
-            <TextField
-              type="number"
-              name="weight"
-              id="weight"
-              label="Weight"
-              value={formik.values.weight}
-              onChange={formik.handleChange}
-              error={formik.touched.weight && Boolean(formik.errors.weight)}
-              helperText={formik.touched.weight && formik.errors.weight}
-            />
-            <span className={classes.span}></span>
-
-            <TextField
-              type="number"
-              name="targetWeight"
-              id="targetWeight"
-              label="Target weight"
-              value={formik.values.targetWeight}
-              onChange={formik.handleChange}
-              error={
-                formik.touched.targetWeight &&
-                Boolean(formik.errors.targetWeight)
-              }
-              helperText={
-                formik.touched.targetWeight && formik.errors.targetWeight
-              }
-            />
-          </Box>
-          <Box alignSelf="flex-start">
+          <Box className={classes.datePicker}>
             <LocalizationProvider dateAdapter={DateAdapter}>
               <DesktopDatePicker
                 label="Date of birth"
@@ -290,55 +241,99 @@ const Registration = () => {
             </LocalizationProvider>
           </Box>
 
-          <FormControl component="fieldset">
-            <RadioGroup
-              row
-              name="row-radio-buttons-group"
-              value={formik.values.gender}
-            >
-              <FormControlLabel
-                value={Gender.FEMALE}
-                control={<Radio />}
-                label="Female"
-                name="gender"
-                onChange={formik.handleChange}
-              />
-              <FormControlLabel
-                value={Gender.MALE}
-                control={<Radio />}
-                label="Male"
-                name="gender"
-                onChange={formik.handleChange}
-              />
-            </RadioGroup>
-          </FormControl>
-
-          <Box display="flex" justifyContent="space-between">
-            <div className={classes.div1}>
-              <SelectFormik
-                options={weightOptions}
-                label="Choose your weight goal"
-                selectFormikName="weightGoal"
-                blurHandler={formik.handleBlur}
-                changeHandler={formik.handleChange}
-                value={formik.values.weightGoal}
-              ></SelectFormik>
-            </div>
-            <span className={classes.span}></span>
-            <div className={classes.div2}>
-              <SelectFormik
-                options={activityLevelOptions}
-                label="Choose your activity level"
-                selectFormikName="activityLevelOptions"
-                blurHandler={formik.handleBlur}
-                changeHandler={formik.handleChange}
-                value={formik.values.activityLevelOptions}
-              ></SelectFormik>
-            </div>
-            {/* <span className={classes.spanAlignment}></span> */}
+          <Box className={classes.radioGroup}>
+            <FormControl component="fieldset">
+              <RadioGroup
+                row
+                name="row-radio-buttons-group"
+                value={formik.values.gender}
+              >
+                <FormControlLabel
+                  value={Gender.FEMALE}
+                  control={<Radio />}
+                  label="Female"
+                  name="gender"
+                  onChange={formik.handleChange}
+                />
+                <FormControlLabel
+                  value={Gender.MALE}
+                  control={<Radio />}
+                  label="Male"
+                  name="gender"
+                  onChange={formik.handleChange}
+                />
+              </RadioGroup>
+            </FormControl>
           </Box>
 
-          <Button color="secondary" variant="contained" type="submit">
+          <TextField
+            type="number"
+            name="height"
+            id="height"
+            className={styles.height}
+            label="Height"
+            value={formik.values.height}
+            onChange={formik.handleChange}
+            error={formik.touched.height && Boolean(formik.errors.height)}
+            helperText={formik.touched.height && formik.errors.height}
+          />
+
+          <TextField
+            type="number"
+            name="weight"
+            id="weight"
+            className={styles.weight}
+            label="Weight"
+            value={formik.values.weight}
+            onChange={formik.handleChange}
+            error={formik.touched.weight && Boolean(formik.errors.weight)}
+            helperText={formik.touched.weight && formik.errors.weight}
+          />
+
+          <TextField
+            type="number"
+            name="targetWeight"
+            id="targetWeight"
+            className={styles.targetWeight}
+            label="Target weight"
+            value={formik.values.targetWeight}
+            onChange={formik.handleChange}
+            error={
+              formik.touched.targetWeight && Boolean(formik.errors.targetWeight)
+            }
+            helperText={
+              formik.touched.targetWeight && formik.errors.targetWeight
+            }
+          />
+
+          <div className={classes.selectContainer1}>
+            <SelectFormik
+              options={weightOptions}
+              label="Choose your weight goal"
+              selectFormikName="weightGoal"
+              blurHandler={formik.handleBlur}
+              changeHandler={formik.handleChange}
+              value={formik.values.weightGoal}
+            ></SelectFormik>
+          </div>
+          <div className={classes.selectContainer2}>
+            <SelectFormik
+              options={activityLevelOptions}
+              label="Choose your activity level"
+              selectFormikName="activityLevelOptions"
+              blurHandler={formik.handleBlur}
+              changeHandler={formik.handleChange}
+              value={formik.values.activityLevelOptions}
+            ></SelectFormik>
+          </div>
+
+          <Button
+            color="secondary"
+            variant="contained"
+            type="submit"
+            size="large"
+            className={styles.button}
+          >
             Register
           </Button>
         </Box>
