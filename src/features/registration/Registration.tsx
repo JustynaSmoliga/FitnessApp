@@ -18,6 +18,9 @@ import DesktopDatePicker from "@mui/lab/DesktopDatePicker";
 import TextField from "@mui/material/TextField";
 import moment from "moment";
 import SelectFormik from "../selectFormik/SelectFormik";
+import { useHistory } from "react-router-dom";
+import { useState } from "react";
+import ModalWindow from "../modal-window/modalWindow";
 
 enum Gender {
   MALE = "male",
@@ -61,7 +64,7 @@ const activityLevelOptions = [
 const validationSchema = yup.object({
   name: yup
     .string()
-    .min(3, "Name should be of minimum 3 characters length")
+    .min(3, "Name should be of minimum 2 characters length")
     .required("Name is required"),
   email: yup
     .string()
@@ -100,6 +103,10 @@ const useStyles = makeStyles((theme: Theme) =>
     root: {
       "& .MuiOutlinedInput-root": {
         backgroundColor: "white",
+        fontFamily: "inherit",
+      },
+      "& .MuiInputLabel-root": {
+        fontFamily: "inherit",
       },
     },
 
@@ -134,7 +141,9 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Registration = () => {
+  const [openDialog, setOpenDialog] = useState(false);
   const classes = useStyles();
+  const history = useHistory();
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -154,6 +163,17 @@ const Registration = () => {
       alert(JSON.stringify(values, null, 2));
     },
   });
+
+  const handleRegistrationAvoidance = () => {
+    setOpenDialog(true);
+  };
+  const disagreeButtonClickHandler = () => {
+    setOpenDialog(false);
+  };
+
+  const agreeButtonHandler = () => {
+    history.push("/login");
+  };
 
   return (
     <Box
@@ -332,12 +352,28 @@ const Registration = () => {
             variant="contained"
             type="submit"
             size="large"
-            className={styles.button}
+            className={styles.buttonRegister}
           >
             Register
           </Button>
+          <Button
+            color="secondary"
+            variant="outlined"
+            size="large"
+            className={styles.buttonLogin}
+            onClick={handleRegistrationAvoidance}
+          >
+            I have account
+          </Button>
         </Box>
       </form>
+      <ModalWindow
+        title="REGISTRATION RESIGN"
+        text="Do you really want to cancel your registration?"
+        confirmHandler={agreeButtonHandler}
+        disagreeHandler={disagreeButtonClickHandler}
+        open={openDialog}
+      />
     </Box>
   );
 };
