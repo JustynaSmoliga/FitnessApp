@@ -1,0 +1,74 @@
+:root {
+  --color-orange: #f24141;
+  --color-blue: #1976d2;
+}
+
+.header {
+  font-weight: 300;
+  font-size: 2em;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  line-height: 1.5;
+}
+
+.header__paragraph1,
+.header__paragraph2 {
+  margin: 0;
+  display: inline-block;
+  background-image: linear-gradient(
+    to right,
+    var(--color-orange) 15%,
+    var(--color-blue) 85%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: 700;
+}
+
+.header__paragraph2 {
+  margin-bottom: 2rem;
+}
+
+.alignLeft {
+  grid-column: 2/5;
+}
+
+.alignRight {
+  grid-column: 5/8;
+}
+
+.radio-group {
+  grid-column: 5/8;
+  margin-left: 1rem;
+}
+
+.height {
+  grid-column: 2/4;
+  grid-row: 4/5;
+}
+
+.weight {
+  grid-column: 4/6;
+  grid-row: 4/5;
+}
+
+.targetWeight {
+  grid-column: 6/8;
+  grid-row: 4/5;
+}
+
+.buttonRegister {
+  grid-column: 3/5;
+  grid-row: 6/7;
+  margin-top: 1.5rem;
+}
+
+.buttonLogin {
+  grid-column: 5/7;
+  margin-top: 1.5rem;
+}

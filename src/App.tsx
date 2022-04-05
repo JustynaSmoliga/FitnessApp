@@ -2,16 +2,30 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import PrivateRoute from "./features/private-route/PrivateRoute";
 import "./App.css";
 import Diary from "./features/diary/Diary";
+import Registration from "./features/registration/Registration";
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
+import MomentUtils from "@date-io/moment";
+import { Box } from "@material-ui/core";
 
 function App() {
   return (
     <div className="App">
       <Switch>
         <Route path="/registration">
-          <p>Registration</p>
+          <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Box
+              width="100%"
+              height="100vh"
+              display="flex"
+              className="background"
+              justifyContent="center"
+            >
+              <Registration />
+            </Box>
+          </MuiPickersUtilsProvider>
         </Route>
         <Route path="/login">
-          <p>Login</p>
+          <p>login</p>
         </Route>
         <PrivateRoute path="/overview">
           <p>Overview</p>
